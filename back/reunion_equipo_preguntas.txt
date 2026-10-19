@@ -1,0 +1,248 @@
+PREGUNTAS PARA REUNION CON EQUIPO TÉCNICO
+==========================================
+
+CONTEXTO
+--------
+La tienda online (Next.js + Django) se integra con la base de datos MySQL existente.
+El sistema de escritorio y la tienda online comparten las mismas tablas.
+Estas preguntas apuntan a coordinar decisiones técnicas para evitar conflictos.
+
+
+1. CONTRASEÑAS EN TABLA WebUsuarios
+------------------------------------
+Actualmente el campo `clave` almacena contraseñas en texto plano (VARCHAR 20).
+Esto representa un riesgo de seguridad si la base de datos es comprometida.
+
+Preguntas:
+- ¿En qué partes del sistema de escritorio se usa el campo `clave` de WebUsuarios?
+  (login, mostrar contraseña al admin, reportes, otro?)
+- ¿El sistema de escritorio solo lee/verifica la contraseña, o también la muestra en pantalla?
+- ¿Sería viable agregar una columna nueva `clave_hash` sin tocar `clave`?
+  La tienda online usaría `clave_hash` y el sistema de escritorio seguiría con `clave` sin cambios.
+- ¿O prefieren migrar ambos sistemas juntos a contraseñas hasheadas?
+
+
+2. GENERACIÓN DE NÚMERO DE COMPROBANTE (campo `compro` en Pedidos)
+-------------------------------------------------------------------
+La tienda online genera números de pedido con el formato "0009-00000001"
+calculando el último número existente y sumándole 1.
+
+Preguntas:
+- ¿Cómo genera el sistema de escritorio el número de comprobante para nuevos pedidos?
+  (¿tiene una tabla de contadores, usa AUTO_INCREMENT, calcula el MAX también?)
+- ¿Es posible que el sistema de escritorio y la tienda online inserten pedidos
+  al mismo tiempo? ¿En qué horarios/escenarios?
+- ¿Existe ya algún mecanismo a nivel de base de datos para garantizar unicidad
+  del número de comprobante?
+- Si no existe, ¿estarían de acuerdo en crear una tabla de contadores en MySQL
+  que ambos sistemas usen para obtener el siguiente número de forma atómica?
+
+NOTA: La tienda online ya tiene implementado un lock a nivel Django (select_for_update)
+para evitar duplicados entre dos pedidos web simultáneos. Pero ese lock no aplica
+cuando el sistema de escritorio inserta al mismo tiempo.
+
+
+3. ACCESO A LA BASE DE DATOS DESDE INTERNET
+--------------------------------------------
+La base de datos MySQL está en una IP pública (200.32.57.157).
+
+Preguntas:
+- ¿Está el puerto 3306 de MySQL expuesto directamente a internet?
+- ¿Existe algún firewall que restrinja qué IPs pueden conectarse a la BD?
+- Si no hay restricción, ¿sería posible configurar el firewall para que solo
+  el servidor donde corre Django pueda conectarse a MySQL?
+
+
+==========================================
+Archivo generado: 2026-03-04
+
+
+==========================================
+POSIBLES FUNCIONALIDADES NUEVAS PARA LA TIENDA WEB
+Agregado: 2026-03-06
+==========================================
+
+CONTEXTO
+--------
+Las siguientes funcionalidades fueron identificadas como candidatas a agregar
+al backend de la tienda online. Muchas dependen de si la base de datos del ERP
+expone las tablas o vistas necesarias. Por favor indicar para cada una:
+  [SI]  = Es viable, la tabla/dato existe y podemos usarla
+  [NO]  = No es viable o no queremos exponer ese dato
+  [PARCIAL] = Es viable pero con limitaciones (aclarar cuáles)
+
+
+--- BLOQUE A: ALTA PRIORIDAD / MÁS PEDIDAS POR CLIENTES B2B ---
+
+A1. CUENTA CORRIENTE DEL CLIENTE
+----------------------------------
+Mostrar al cliente su saldo, facturas impagas y vencimientos desde la web.
+Es la funcionalidad más solicitada en distribuidoras B2B.
+
+Preguntas:
+- ¿Existe una tabla de movimientos de cuenta corriente (tipo cta_cte o similar)?
+- ¿Esa tabla es segura de leer desde la web o tiene datos sensibles de otros sistemas?
+- ¿El saldo es un campo calculado o hay una vista ya armada en la BD?
+
+
+A2. FACTURAS Y REMITOS VINCULADOS A PEDIDOS
+---------------------------------------------
+Que el cliente pueda ver, desde el detalle de un pedido, los comprobantes
+asociados (FC-A, remito, etc.) con número, fecha y monto.
+
+Preguntas:
+- ¿Existe una tabla de comprobantes emitidos (facturas/remitos) vinculada a pedidos?
+- ¿Se puede relacionar por el campo `compro` o hay otro campo de vínculo?
+- ¿Los montos con IVA están calculados en la BD o habría que calcularlos?
+
+
+A3. ESTADO DEL PEDIDO EN TIEMPO REAL
+--------------------------------------
+El campo `nroest` ya existe en la tabla Pedidos. Si el ERP lo actualiza,
+el cliente podría ver el estado (pendiente, en preparación, despachado) sin llamar.
+
+Preguntas:
+- ¿El sistema de escritorio actualiza el campo `nroest` con el avance del pedido?
+- ¿Qué valores puede tomar ese campo y qué significa cada uno?
+- ¿Existe alguna tabla de estados con su descripción?
+
+
+A4. PENDIENTES DE ENTREGA POR PEDIDO
+--------------------------------------
+Los campos `penden` (cantidad pendiente de entrega) y `pendfc` (pendiente de
+facturación) ya existen en PedidosDetalle. Se podría mostrar al cliente cuánto
+de cada artículo ya fue entregado y cuánto falta.
+
+Preguntas:
+- ¿El ERP actualiza estos campos al hacer entregas parciales?
+- ¿Son confiables para mostrárselos al cliente?
+
+
+--- BLOQUE B: FUNCIONALIDADES COMERCIALES ---
+
+B1. VENDEDOR ASIGNADO AL CLIENTE
+----------------------------------
+El campo `nroven` ya existe en Contactos y en Pedidos. Mostrar al cliente
+el nombre, teléfono y email de su vendedor asignado.
+
+Preguntas:
+- ¿Existe una tabla de vendedores con nombre y datos de contacto?
+  (¿Se llama `vendedores`, `tipo_vendedores` o similar?)
+- ¿Todos los clientes web tienen un vendedor asignado o puede ser 0/null?
+
+
+B2. DESCUENTOS DEL CLIENTE VISIBLES ANTES DE CONFIRMAR
+--------------------------------------------------------
+Los campos `descu1`, `descu2` y `pordes` ya existen en Contactos.
+Mostrar al cliente su porcentaje de descuento aplicado en el carrito
+antes de confirmar el pedido.
+
+Preguntas:
+- ¿Estos descuentos son los que corresponde mostrar al cliente web?
+- ¿Hay otros descuentos que apliquen (por artículo, por cantidad, etc.)?
+
+
+B3. REPETIR PEDIDO
+-------------------
+Funcionalidad que permite crear un nuevo pedido con los mismos artículos
+de uno anterior, con un solo clic. Muy útil para clientes con pedidos recurrentes.
+
+Preguntas:
+- ¿Habría algún conflicto con el ERP si se insertan pedidos con artículos
+  que ya no tienen stock o que fueron descontinuados?
+- ¿El precio debería tomarse del pedido original o del precio actual del artículo?
+
+
+B4. FAVORITOS
+--------------
+El campo `esfavo` ya existe en la tabla de artículos (actualmente comentado en el modelo).
+
+Preguntas:
+- ¿El ERP escribe ese campo, o es un campo que podemos usar libremente desde la web?
+- Si es de uso libre, ¿podemos activarlo para que el cliente marque artículos favoritos?
+
+
+--- BLOQUE C: FUNCIONALIDADES LOGÍSTICAS ---
+
+C1. MÚLTIPLES DIRECCIONES DE ENTREGA
+--------------------------------------
+La tabla Contactos ya tiene campos de dirección de envío (calenv, nroenv, locenv, etc.).
+Se podría permitir al cliente registrar y elegir entre varias direcciones al hacer un pedido.
+
+Preguntas:
+- ¿Existe una tabla separada de direcciones de entrega por cliente, o solo hay
+  una dirección de envío por contacto?
+- ¿El ERP usa la dirección de envío del pedido o siempre usa la del contacto?
+
+
+C2. TRANSPORTE ASIGNADO
+-------------------------
+El campo `transp` ya existe en Contactos. Mostrar al cliente qué transporte
+está asignado para sus entregas y poder seleccionarlo al hacer un pedido.
+
+Preguntas:
+- ¿Existe una tabla de transportes con datos de contacto?
+- ¿El transporte se asigna por cliente, por zona, o el cliente puede elegirlo?
+
+
+--- BLOQUE D: HERRAMIENTAS DE GESTIÓN ---
+
+D1. EXPORTAR PEDIDO A PDF O EXCEL
+-----------------------------------
+Que el cliente pueda descargar un pedido en formato PDF o Excel para sus
+registros internos de compras.
+
+Preguntas:
+- ¿El ERP ya genera un PDF del pedido? ¿Está accesible desde alguna ruta o tabla?
+- Si no, ¿tenemos autorización para generar nuestro propio PDF desde el backend?
+
+
+D2. ESTADÍSTICAS DE COMPRAS DEL CLIENTE
+-----------------------------------------
+Resumen de artículos más comprados, monto promedio por pedido y frecuencia
+de compra. Útil para el cliente y para el vendedor.
+
+Preguntas:
+- ¿Las facturas/pedidos históricos están todos en la misma tabla o hay tablas
+  por año/período?
+- ¿Podemos leer históricos sin impactar la performance del sistema de escritorio?
+
+
+D3. PANEL DEL VENDEDOR
+------------------------
+Si el campo `catusu` en WebUsuarios puede tener un valor de tipo "vendedor",
+crear un panel donde el vendedor vea los pedidos de sus clientes asignados
+y pueda hacer pedidos en nombre de un cliente.
+
+Preguntas:
+- ¿Está previsto que los vendedores tengan acceso a la web?
+- ¿Qué valor tomaría `catusu` para un usuario vendedor?
+- ¿Un vendedor debería ver SOLO sus clientes (filtrado por nroven) o todos?
+
+
+D4. CARRITO PERSISTENTE EN BASE DE DATOS
+------------------------------------------
+Actualmente el carrito vive en el navegador del cliente (Redux/localStorage).
+Si se guarda en el backend, el cliente puede empezar un pedido desde la PC
+y continuarlo desde el celular, o recuperarlo si cierra el navegador.
+
+Preguntas:
+- ¿Sería viable agregar una tabla nueva `web_carritos` manejada solo por la web,
+  sin interferir con el ERP?
+- ¿O prefieren que el carrito siga siendo solo del lado del cliente?
+
+
+--- BLOQUE E: NOTIFICACIONES ---
+
+E1. EMAIL AL CONFIRMAR UN PEDIDO
+----------------------------------
+Enviar un email de confirmación al cliente cuando su pedido es registrado,
+con el detalle de los artículos y el número de comprobante.
+
+Preguntas:
+- ¿Existe un servidor SMTP disponible (Gmail, servidor propio, etc.)?
+- ¿El ERP ya envía emails de confirmación, o esto sería algo nuevo?
+- ¿Queremos también notificar al vendedor asignado cuando entra un pedido de su cliente?
+
+
+==========================================

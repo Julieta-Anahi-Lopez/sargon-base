@@ -1,0 +1,621 @@
+{
+  "info": {
+    "name": "Ser Natural — API",
+    "description": "Colección completa de endpoints de la API REST de Ser Natural.\n\n**Cómo usar:**\n1. Ejecutar la request «Login» — guarda automáticamente los tokens en las variables de colección `access_token` y `refresh_token`.\n2. Todas las requests con autenticación usan `{{access_token}}` en el header `Authorization: Bearer`.\n3. Cambiar `base_url` si el backend corre en otro host/puerto.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url",       "value": "http://localhost:8004", "type": "string" },
+    { "key": "access_token",   "value": "",                      "type": "string" },
+    { "key": "refresh_token",  "value": "",                      "type": "string" }
+  ],
+  "item": [
+
+    {
+      "name": "Auth",
+      "item": [
+
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.access) {",
+                  "    pm.collectionVariables.set('access_token',  json.access);",
+                  "    pm.collectionVariables.set('refresh_token', json.refresh);",
+                  "    pm.test('Tokens guardados', () => pm.response.to.have.status(200));",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"vendedor@ejemplo.com\",\n  \"clave\": \"mi_clave\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/login/", "host": ["{{base_url}}"], "path": ["api","auth","login",""] }
+          },
+          "response": [
+            {
+              "name": "200 OK — Login exitoso",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"refresh\": \"<refresh_token>\",\n  \"access\": \"<access_token>\",\n  \"user\": {\n    \"codigo\": 1,\n    \"nombre\": \"Vendedor Ejemplo\",\n    \"email\": \"vendedor@ejemplo.com\",\n    \"catusu\": \"V\",\n    \"domcal\": \"Av. Alem\",\n    \"domnro\": \"1234\",\n    \"cuit\": \"20-12345678-9\",\n    \"dni\": \"12345678\",\n    \"catIva\": \"Responsable Inscripto\"\n  }\n}"
+            },
+            {
+              "name": "401 — Credenciales inválidas",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{ \"error\": \"Credenciales inválidas\" }"
+            },
+            {
+              "name": "400 — Faltan campos",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{ \"error\": \"Debe proporcionar email y contraseña\" }"
+            }
+          ]
+        },
+
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.access) {",
+                  "    pm.collectionVariables.set('access_token', json.access);",
+                  "    pm.test('Nuevo access_token guardado', () => pm.response.to.have.status(200));",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/token/refresh/", "host": ["{{base_url}}"], "path": ["api","auth","token","refresh",""] }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "body": "{ \"access\": \"<nuevo_access_token>\" }"
+            }
+          ]
+        },
+
+        {
+          "name": "Me (usuario autenticado)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/api/auth/me/", "host": ["{{base_url}}"], "path": ["api","auth","me",""] }
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"codigo\": 1,\n  \"nombre\": \"Vendedor Ejemplo\",\n  \"email\": \"vendedor@ejemplo.com\",\n  \"catusu\": \"V\",\n  \"domcal\": \"Av. Alem\",\n  \"domnro\": \"1234\",\n  \"cuit\": \"20-12345678-9\",\n  \"dni\": \"12345678\",\n  \"catIva\": \"Responsable Inscripto\"\n}"
+            },
+            {
+              "name": "401 — Sin token",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{ \"detail\": \"Authentication credentials were not provided.\" }"
+            }
+          ]
+        }
+
+      ]
+    },
+
+    {
+      "name": "Categorías (público)",
+      "item": [
+
+        {
+          "name": "Rubros — listar",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/tipo-rubros/", "host": ["{{base_url}}"], "path": ["api","tipo-rubros",""] }
+          }
+        },
+
+        {
+          "name": "Rubros — detalle",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/tipo-rubros/1/", "host": ["{{base_url}}"], "path": ["api","tipo-rubros","1",""] }
+          }
+        },
+
+        {
+          "name": "Subrubros — listar",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/tipo-subrubros/", "host": ["{{base_url}}"], "path": ["api","tipo-subrubros",""] }
+          }
+        },
+
+        {
+          "name": "Subrubros — detalle (clave compuesta nrorub-codigo)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/tipo-subrubros/1-01/",
+              "host": ["{{base_url}}"],
+              "path": ["api","tipo-subrubros","1-01",""]
+            },
+            "description": "La clave compuesta es `{nrorub}-{codigo}`, p. ej. `1-01`."
+          }
+        },
+
+        {
+          "name": "Rubros con subrubros anidados",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/tipo-rubros-con-subrubros/", "host": ["{{base_url}}"], "path": ["api","tipo-rubros-con-subrubros",""] },
+            "description": "Devuelve el árbol completo: cada rubro incluye su lista de subrubros. Resultado cacheado 1 hora en Redis."
+          }
+        },
+
+        {
+          "name": "Marcas — listar",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/tipo-marcas/", "host": ["{{base_url}}"], "path": ["api","tipo-marcas",""] }
+          }
+        },
+
+        {
+          "name": "Marcas — detalle",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/tipo-marcas/1/", "host": ["{{base_url}}"], "path": ["api","tipo-marcas","1",""] }
+          }
+        }
+
+      ]
+    },
+
+    {
+      "name": "Artículos",
+      "item": [
+
+        {
+          "name": "Artículos — listar (sin filtros)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""]
+            },
+            "description": "Devuelve lista paginada. El precio que se muestra depende del `nrolis` del contacto autenticado."
+          }
+        },
+
+        {
+          "name": "Artículos — filtrar por rubro",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/?nrogru=1",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""],
+              "query": [{ "key": "nrogru", "value": "1" }]
+            }
+          }
+        },
+
+        {
+          "name": "Artículos — filtrar por subrubro",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/?nrosub=01",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""],
+              "query": [{ "key": "nrosub", "value": "01" }]
+            }
+          }
+        },
+
+        {
+          "name": "Artículos — filtrar por marca",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/?nromar=6",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""],
+              "query": [{ "key": "nromar", "value": "6" }]
+            }
+          }
+        },
+
+        {
+          "name": "Artículos — filtrar por rango de precio",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/?precio_min=100&precio_max=500",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""],
+              "query": [
+                { "key": "precio_min", "value": "100" },
+                { "key": "precio_max", "value": "500" }
+              ]
+            }
+          }
+        },
+
+        {
+          "name": "Artículos — buscar por nombre",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/?nombre=arroz",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""],
+              "query": [{ "key": "nombre", "value": "arroz" }]
+            },
+            "description": "Búsqueda parcial case-insensitive. No se cachea en Redis."
+          }
+        },
+
+        {
+          "name": "Artículos — buscar por código",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/?codigo=ABC",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""],
+              "query": [{ "key": "codigo", "value": "ABC" }]
+            }
+          }
+        },
+
+        {
+          "name": "Artículos — paginación (página 2)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/?page=2&page_size=20",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""],
+              "query": [
+                { "key": "page",      "value": "2"  },
+                { "key": "page_size", "value": "20" }
+              ],
+              "description": "page_size máximo: 100."
+            }
+          }
+        },
+
+        {
+          "name": "Artículos — filtros combinados",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/?nrogru=1&nromar=6&precio_min=50&page=1&page_size=10",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos",""],
+              "query": [
+                { "key": "nrogru",    "value": "1"  },
+                { "key": "nromar",    "value": "6"  },
+                { "key": "precio_min","value": "50" },
+                { "key": "page",      "value": "1"  },
+                { "key": "page_size", "value": "10" }
+              ]
+            }
+          }
+        },
+
+        {
+          "name": "Artículos — detalle",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/articulos/ART001/",
+              "host": ["{{base_url}}"],
+              "path": ["api","articulos","ART001",""]
+            },
+            "description": "El id es el código del artículo (campo `codigo`)."
+          }
+        },
+
+        {
+          "name": "Imágenes — listar",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/api/imagenes/", "host": ["{{base_url}}"], "path": ["api","imagenes",""] }
+          }
+        },
+
+        {
+          "name": "Imágenes — detalle",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/api/imagenes/1/", "host": ["{{base_url}}"], "path": ["api","imagenes","1",""] }
+          }
+        }
+
+      ]
+    },
+
+    {
+      "name": "Usuarios",
+      "item": [
+
+        {
+          "name": "Contactos — listar",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/api/contactos/", "host": ["{{base_url}}"], "path": ["api","contactos",""] }
+          }
+        },
+
+        {
+          "name": "Contactos — detalle",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/api/contactos/1/", "host": ["{{base_url}}"], "path": ["api","contactos","1",""] }
+          }
+        },
+
+        {
+          "name": "Crear usuario (solo vendedores)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type",  "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\":   \"Juan García\",\n  \"e_mail\":   \"juan@ejemplo.com\",\n  \"nrodoc\":   \"30123456\",\n  \"clave\":    \"mi123\",\n  \"locali\":   8000,\n  \"cativa\":   \"CF\",\n  \"telcel\":   \"2914000000\",\n  \"domcalle\": \"Av. Alem 1234\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/web-usuarios/", "host": ["{{base_url}}"], "path": ["api","web-usuarios",""] },
+            "description": "Requiere `catusu=V` en el token. Crea primero un Contacto y luego el WebUsuario.\n\n**Campos requeridos:** nombre, e_mail, nrodoc, locali, cativa\n**Campos opcionales:** clave (default: '1234'), telcel, domcalle, cuit (obligatorio si cativa != 'CF')\n\n**Localidades válidas:** 8000 (Bahía Blanca), 8103 (Ing. White), 8105 (Gral. Cerri), 8109 (Punta Alta), 8118 (Cabildo), 8150 (Cnel. Dorrego), 8153 (Monte Hermoso), 8160 (Tornquist), 8168 (Sierra de la Ventana), 8170 (Pigüé), 7530 (Cnel. Pringles)\n\n**Categorías IVA:** CF, 1 (Resp. Inscripto), 7 (Monotributista)"
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"codigo\": 42,\n  \"nombre\": \"Juan García\",\n  \"e_mail\": \"juan@ejemplo.com\",\n  \"catusu\": \"C\",\n  \"gposeg\": 0,\n  \"telcel\": \"2914000000\",\n  \"nrodoc\": \"30123456\"\n}"
+            },
+            {
+              "name": "400 — DNI duplicado",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{ \"error\": \"Ya existe un usuario web con este DNI\" }"
+            },
+            {
+              "name": "400 — Email duplicado",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{ \"error\": \"Ya existe un usuario web con este email\" }"
+            },
+            {
+              "name": "401 — Sin autenticación",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{ \"detail\": \"Authentication credentials were not provided.\" }"
+            },
+            {
+              "name": "403 — No es vendedor",
+              "status": "Forbidden",
+              "code": 403,
+              "body": "{ \"detail\": \"You do not have permission to perform this action.\" }"
+            }
+          ]
+        },
+
+        {
+          "name": "Crear usuario con CUIT (Resp. Inscripto)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type",  "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\":   \"María López\",\n  \"e_mail\":   \"maria@ejemplo.com\",\n  \"nrodoc\":   \"25678901\",\n  \"clave\":    \"clave123\",\n  \"locali\":   8000,\n  \"cativa\":   \"1\",\n  \"cuit\":     \"27-25678901-3\",\n  \"telcel\":   \"2914111222\",\n  \"domcalle\": \"Belgrano 500\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/web-usuarios/", "host": ["{{base_url}}"], "path": ["api","web-usuarios",""] }
+          }
+        },
+
+        {
+          "name": "WebUsuarios — ver propio perfil",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/api/web-usuarios/", "host": ["{{base_url}}"], "path": ["api","web-usuarios",""] },
+            "description": "Cada usuario solo ve su propio registro."
+          }
+        },
+
+        {
+          "name": "WebUsuarios — actualizar (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type",  "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telcel\": \"2914999888\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/web-usuarios/1/", "host": ["{{base_url}}"], "path": ["api","web-usuarios","1",""] }
+          }
+        }
+
+      ]
+    },
+
+    {
+      "name": "Pedidos",
+      "item": [
+
+        {
+          "name": "Pedidos — listar",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/api/pedidos/", "host": ["{{base_url}}"], "path": ["api","pedidos",""] }
+          }
+        },
+
+        {
+          "name": "Pedidos — detalle",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/api/pedidos/0009-00000001/", "host": ["{{base_url}}"], "path": ["api","pedidos","0009-00000001",""] },
+            "description": "El id es el número de comprobante, formato `PPPP-NNNNNNNN`."
+          }
+        },
+
+        {
+          "name": "Crear pedido",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type",  "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"observ\": \"Entregar en turno mañana\",\n  \"detalle\": [\n    {\n      \"codigo\":      \"ART001\",\n      \"cantidad\":    3,\n      \"precio\":      150.50,\n      \"descuento\":   0,\n      \"observacion\": \"\"\n    },\n    {\n      \"codigo\":      \"ART002\",\n      \"cantidad\":    1,\n      \"precio\":      280.00,\n      \"descuento\":   5\n    }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/pedidos/", "host": ["{{base_url}}"], "path": ["api","pedidos",""] },
+            "description": "**Campos del pedido:**\n- `observ` (opcional): observaciones generales\n- `detalle` (requerido, al menos 1 ítem):\n  - `codigo` (string, requerido): código del artículo\n  - `cantidad` (float, requerido, > 0)\n  - `precio` (float, requerido, >= 0)\n  - `descuento` (float, opcional, default 0): porcentaje\n  - `observacion` (string, opcional)\n\n**Errores posibles:**\n- `400 stock_insuficiente`: devuelve `tipo`, `mensaje` e `items` con stock disponible vs solicitado. El frontend NO debe limpiar el carrito en este caso."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"compro\": \"0009-00000001\",\n  \"nrocli\": 42,\n  \"fecped\": \"2026-04-22T10:30:00\",\n  \"observ\": \"Entregar en turno mañana\",\n  \"nroven\": 1,\n  \"detalles\": [\n    {\n      \"compro\": \"0009-00000001\",\n      \"nroord\": 1,\n      \"codart\": \"ART001\",\n      \"cantid\": 3.0,\n      \"descri\": \"Arroz integral x 1kg\",\n      \"precio\": 150.50,\n      \"pordes\": 0.0\n    }\n  ]\n}"
+            },
+            {
+              "name": "400 — Stock insuficiente",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"tipo\": \"stock_insuficiente\",\n  \"mensaje\": \"Algunos artículos no tienen stock suficiente para completar el pedido.\",\n  \"items\": [\n    { \"codigo\": \"ART001\", \"solicitado\": 10, \"disponible\": 3 }\n  ]\n}"
+            },
+            {
+              "name": "400 — Artículo inexistente",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{ \"detalle\": [{ \"codigo\": [\"El artículo con código XYZ no existe\"] }] }"
+            }
+          ]
+        },
+
+        {
+          "name": "Crear pedido — mínimo (sin observaciones)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type",  "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"detalle\": [\n    {\n      \"codigo\":   \"ART001\",\n      \"cantidad\": 1,\n      \"precio\":   150.50\n    }\n  ]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/pedidos/", "host": ["{{base_url}}"], "path": ["api","pedidos",""] }
+          }
+        }
+
+      ]
+    },
+
+    {
+      "name": "Errores de autenticación (referencia)",
+      "item": [
+
+        {
+          "name": "Sin token — debe devolver 401",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/auth/me/", "host": ["{{base_url}}"], "path": ["api","auth","me",""] },
+            "description": "Request sin header Authorization. Verifica que el endpoint rechaza correctamente."
+          }
+        },
+
+        {
+          "name": "Token inválido — debe devolver 401",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer token_invalido_aqui" }],
+            "url": { "raw": "{{base_url}}/api/auth/me/", "host": ["{{base_url}}"], "path": ["api","auth","me",""] }
+          }
+        },
+
+        {
+          "name": "Cliente intenta crear usuario — debe devolver 403",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type",  "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Test\",\n  \"e_mail\": \"test@test.com\",\n  \"nrodoc\": \"11223344\",\n  \"locali\": 8000,\n  \"cativa\": \"CF\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{base_url}}/api/web-usuarios/", "host": ["{{base_url}}"], "path": ["api","web-usuarios",""] },
+            "description": "Loguear primero como cliente (catusu=C) para obtener el token. El endpoint debe responder 403."
+          }
+        }
+
+      ]
+    }
+
+  ]
+}

@@ -1,0 +1,29 @@
+# Entornos
+.env
+.env.local
+.env.production
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Next.js
+front/.next/
+front/out/
+front/node_modules/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

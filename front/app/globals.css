@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg:          #EAF3CF; /* brand-light — fondo general */
+    --bg-subtle:   #D5E9A8; /* tinte medio — fondos secundarios */
+    --border:      #B5CC78; /* borde verde suave */
+    --text:        #2C4A10; /* verde oscuro — texto principal */
+    --text-muted:  #5A8030; /* verde medio — texto secundario */
+    --surface:     #ffffff; /* blanco — tarjetas y superficies */
+    --header:      #5C8020; /* brand-dark — header/footer */
+    --brand:       #7FAA33; /* verde corporativo (pleno 1) */
+    --brand-dark:  #5C8020; /* verde oscuro (hover/contraste) */
+    --brand-light: #EAF3CF; /* verde muy claro (fondos) */
+    --accent:      #EEDF38; /* amarillo corporativo (pleno 2) */
+    --accent-dark: #C9BB20; /* amarillo oscuro (hover) */
+  }
+
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-montserrat), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .text-brand    { color: var(--brand); }
+  .bg-brand      { background-color: var(--brand); }
+  .bg-surface    { background-color: var(--surface); }
+  .bg-subtle     { background-color: var(--bg-subtle); }
+  .border-brand  { border-color: var(--brand); }
+  .text-accent   { color: var(--accent); }
+  .bg-accent     { background-color: var(--accent); }
+  .border-accent { border-color: var(--accent); }
+
+  /* Skeleton animation */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--bg-subtle) 25%,
+      var(--border) 50%,
+      var(--bg-subtle) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Drawer slide animations */
+  .drawer-enter {
+    animation: slideIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  .drawer-exit {
+    animation: slideOut 0.2s ease-in forwards;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
+  @keyframes slideOut {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100%); }
+  }
+
+  /* Fade overlay */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .fade-in { animation: fadeIn 0.2s ease forwards; }
+}
