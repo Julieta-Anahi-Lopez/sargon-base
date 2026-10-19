@@ -10,6 +10,7 @@ from rest_framework.decorators import action
 from django.db import transaction
 from rest_framework.throttling import AnonRateThrottle
 from .models import Contactos, WebUsuarios, WebCarrito
+from apps.parametros.models import get_parametro
 
 
 class LoginRateThrottle(AnonRateThrottle):
@@ -253,25 +254,6 @@ class WebUsuariosViewSet(viewsets.ModelViewSet):
                 'nombre': nombre_final,
             })
 
-    def _es_localidad_lista_cero(self, codigo_postal: str) -> bool:
-        # Lista de códigos postales válidos (como strings)
-        codigos_validos = {
-            "8000",  # Bahía Blanca
-            "8105",  # General Daniel Cerri
-            "8109",  # Punta Alta
-            "8150",  # Coronel Dorrego
-            "8153",  # Monte Hermoso
-            "8103",  # Ingeniero White
-            "8160",  # Tornquist
-            "7530",  # Coronel Pringles
-            "8168",  # Sierra de la Ventana
-            "8118",  # Cabildo
-            "8170",  # Pigue
-        }
-
-        return str(codigo_postal) in codigos_validos
-
-    
     def _crear_contacto(self, data):
         nro_emp = data.get('nroemp', 1)
         nrocon = Contactos.objects.all().order_by('-nrocon').first().nrocon + 1
@@ -338,7 +320,7 @@ class WebUsuariosViewSet(viewsets.ModelViewSet):
         if cativa in ('1', '7') and not cuit:
             raise ValueError('El CUIT es obligatorio para Responsable Inscripto y Monotributista')
 
-        nrolis = 0 if self._es_localidad_lista_cero(locali) else 1
+        nrolis = int(get_parametro('Web', 4, default='0'))
         logger.debug("Lista de precios asignada: %s", nrolis)
 
         if Contactos.objects.filter(nrodoc=nrodoc).exists():

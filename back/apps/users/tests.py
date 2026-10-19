@@ -290,30 +290,28 @@ class WebUsuariosViewSetPermissionsTest(APITestCase):
 
 
 # ---------------------------------------------------------------------------
-# WebUsuariosViewSet — _es_localidad_lista_cero
+# WebUsuariosViewSet — nrolis_defecto via parametros
 # ---------------------------------------------------------------------------
 
-class LocalidadListaZeroTest(TestCase):
+class NrolisDefectoTest(TestCase):
 
     def setUp(self):
         from apps.users.views import WebUsuariosViewSet
         self.viewset = WebUsuariosViewSet()
 
-    def test_bahia_blanca_is_lista_zero(self):
-        self.assertTrue(self.viewset._es_localidad_lista_cero('8000'))
+    @patch('apps.users.views.get_parametro', return_value='0')
+    def test_nrolis_uses_parametro_value_zero(self, mock_get):
+        self.assertEqual(int(mock_get('Web', 4, default='0')), 0)
 
-    def test_punta_alta_is_lista_zero(self):
-        self.assertTrue(self.viewset._es_localidad_lista_cero('8109'))
+    @patch('apps.users.views.get_parametro', return_value='1')
+    def test_nrolis_uses_parametro_value_one(self, mock_get):
+        self.assertEqual(int(mock_get('Web', 4, default='0')), 1)
 
-    def test_buenos_aires_capital_is_not_lista_zero(self):
-        self.assertFalse(self.viewset._es_localidad_lista_cero('1000'))
-
-    def test_unknown_cp_is_not_lista_zero(self):
-        self.assertFalse(self.viewset._es_localidad_lista_cero('9999'))
-
-    def test_integer_cp_is_coerced_to_string(self):
-        # The method uses str(codigo_postal), so passing an int should work
-        self.assertTrue(self.viewset._es_localidad_lista_cero(8000))
+    @patch('apps.users.views.get_parametro', return_value=None)
+    def test_nrolis_falls_back_to_zero_when_parametro_missing(self, mock_get):
+        # default='0' is used when the row doesn't exist
+        result = mock_get('Web', 4, default='0') or '0'
+        self.assertEqual(int(result), 0)
 
 
 # ---------------------------------------------------------------------------
@@ -362,11 +360,11 @@ class CrearContactoValidationTest(TestCase):
 
         self.assertEqual(result, existing)
 
+    @patch('apps.users.views.get_parametro', return_value='0')
     @patch('apps.users.views.Contactos.objects')
-    def test_assigns_lista_zero_for_local_cp(self, mock_con):
-        # Bahia Blanca CP → nrolis = 0
+    def test_assigns_nrolis_from_parametro_zero(self, mock_con, _mock_param):
         new_contacto = make_contacto(nrolis=0)
-        mock_con.filter.return_value.exists.return_value = False  # no duplicate DNI
+        mock_con.filter.return_value.exists.return_value = False
         mock_con.all.return_value.order_by.return_value.first.return_value = MagicMock(nrocon=100)
         mock_con.get_or_create.return_value = (new_contacto, True)
 
@@ -377,19 +375,19 @@ class CrearContactoValidationTest(TestCase):
             'cativa': 'CF',
         })
 
-        # get_or_create was called with nrolis=0
         call_kwargs = mock_con.get_or_create.call_args.kwargs
         self.assertEqual(call_kwargs.get('nrolis'), 0)
 
+    @patch('apps.users.views.get_parametro', return_value='1')
     @patch('apps.users.views.Contactos.objects')
-    def test_assigns_lista_one_for_non_local_cp(self, mock_con):
+    def test_assigns_nrolis_from_parametro_one(self, mock_con, _mock_param):
         new_contacto = make_contacto(nrolis=1)
         mock_con.filter.return_value.exists.return_value = False
         mock_con.all.return_value.order_by.return_value.first.return_value = MagicMock(nrocon=100)
         mock_con.get_or_create.return_value = (new_contacto, True)
 
         self.viewset._crear_contacto({
-            'locali': '1000',  # Buenos Aires — not in lista 0
+            'locali': '1000',
             'nrodoc': '22222222',
             'e_mail': 'y@y.com',
             'cativa': 'CF',

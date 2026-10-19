@@ -10,6 +10,7 @@ class Parametros(models.Model):
         get_parametro('Web', 1)           -> punto de venta para pedidos web
         get_parametro('Web', 2)           -> número de empresa
         get_parametro('Web', 3)           -> monto mínimo de pedido
+        get_parametro('Web', 4)           -> lista de precios por defecto para nuevos clientes (0 o 1)
 
     La columna `aplica` permite que una misma tabla sirva a distintos
     módulos o sistemas sin colisiones de códigos.
