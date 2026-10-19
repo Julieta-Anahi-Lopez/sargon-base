@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Shield, ArrowLeft, UserCheck, Database, Bell, Smartphone } from "lucide-react";
+import { CLIENTE } from "@/lib/config";
 
 export default function PoliticaPrivacidad() {
   return (
@@ -32,7 +33,7 @@ export default function PoliticaPrivacidad() {
             <p>Para poder utilizar este Sitio Web de manera eficiente y segura, los usuarios deberán aportar ciertos datos,
               entre ellos su nombre y apellido, domicilio y cuenta de e-mail, sin los cuales se tornaría imposible brindar los servicios.
               Por eso se requiere que éstos sean verdaderos y exactos.</p>
-            <p>La información personal que los Usuarios ingresan es totalmente confidencial y Ser Natural hará su mejor esfuerzo
+            <p>La información personal que los Usuarios ingresan es totalmente confidencial y {CLIENTE.nombre} hará su mejor esfuerzo
               para proteger la privacidad de los mismos, de conformidad con lo dispuesto en la Ley 25.326.</p>
           </Section>
 
@@ -40,18 +41,18 @@ export default function PoliticaPrivacidad() {
             <p>Los Usuarios tienen el derecho de acceder a la información de su cuenta y podrán modificar los datos ingresados cuando
               lo deseen. También podrán ejercer el derecho de rectificación y requerir en cualquier momento la baja de su solicitud
               y la eliminación de su cuenta de la base de datos.</p>
-            <p>En caso de que los datos sean requeridos por vía legal, administrativa o judicial, Ser Natural se verá compelida
+            <p>En caso de que los datos sean requeridos por vía legal, administrativa o judicial, {CLIENTE.nombre} se verá compelida
               a revelar los mismos a la autoridad solicitante.</p>
           </Section>
 
           <Section icon={<Bell className="w-5 h-5 text-brand" />} title="Comunicaciones">
-            <p>Por el solo hecho de registrarse en este Sitio Web, los Usuarios aceptan que Ser Natural tiene derecho a comunicarse
+            <p>Por el solo hecho de registrarse en este Sitio Web, los Usuarios aceptan que {CLIENTE.nombre} tiene derecho a comunicarse
               con ellos por vía postal, telefónica o electrónica y enviar información que considere de su interés. Los Usuarios
               podrán optar por no recibir estas comunicaciones.</p>
           </Section>
 
           <Section icon={<Smartphone className="w-5 h-5 text-brand" />} title="Información Técnica sobre Dispositivos" alt>
-            <p>Si usted accede al Sitio Web de Ser Natural a través de un dispositivo móvil, la información recogida también incluirá
+            <p>Si usted accede al Sitio Web de {CLIENTE.nombre} a través de un dispositivo móvil, la información recogida también incluirá
               el identificador único del dispositivo, ubicación geográfica y otros datos similares, cuando esté permitido.</p>
             <p>Mientras navega, usamos tecnologías de recogida automática de datos como cookies y servicios de analítica.
               Usted tiene el derecho de oponerse al uso de dichas tecnologías.</p>

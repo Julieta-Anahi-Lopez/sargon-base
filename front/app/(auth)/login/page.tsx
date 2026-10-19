@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/redux/store";
 import { loginUser } from "@/redux/slices/authSlice";
 import { Button } from "@/components/ui/Button";
+import { CLIENTE } from "@/lib/config";
 
 function LoginForm() {
   const router       = useRouter();
@@ -134,7 +135,7 @@ export default function LoginPage() {
             Catálogo completo, precios mayoristas y atención personalizada para ayudarte a crecer.
           </p>
         </div>
-        <p className="text-white/30 text-xs">© {new Date().getFullYear()} Ser Natural</p>
+        <p className="text-white/30 text-xs">© {new Date().getFullYear()} {CLIENTE.nombre}</p>
       </div>
 
       {/* Panel derecho — formulario */}

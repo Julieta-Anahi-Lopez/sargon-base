@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
+import { CLIENTE } from "@/lib/config";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -11,8 +12,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: { default: "Ser Natural", template: "%s | Ser Natural" },
-  description: "Ser Natural — Productos naturales y saludables para tu negocio.",
+  title: { default: CLIENTE.seo.titulo, template: `%s | ${CLIENTE.seo.titulo}` },
+  description: CLIENTE.seo.descripcion,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

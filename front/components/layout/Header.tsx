@@ -10,6 +10,7 @@ import type { RootState } from "@/redux/store";
 import { useAuth } from "@/app/lib/hooks/useAuth";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { CLIENTE } from "@/lib/config";
 
 export function Header() {
   const { isAuthenticated, user } = useAuth();
@@ -30,7 +31,7 @@ export function Header() {
           <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/images/logo.png"
-              alt="Ser Natural"
+              alt={CLIENTE.nombre}
               width={1752}
               height={2012}
               className="h-16 w-auto"

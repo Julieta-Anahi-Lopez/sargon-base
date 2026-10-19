@@ -723,9 +723,10 @@ class SendResetEmailTest(TestCase):
         from apps.users.views import _send_reset_email
         _send_reset_email('cliente@test.com', 'MariaJose', 'http://localhost/reset?token=xyz')
 
+        from django.conf import settings as django_settings
         payload = mock_post.call_args.kwargs['json']
         self.assertEqual(payload['to'], ['cliente@test.com'])
-        self.assertEqual(payload['subject'], 'Recuperación de contraseña - Ser Natural')
+        self.assertEqual(payload['subject'], f'Recuperación de contraseña - {django_settings.NOMBRE_CLIENTE}')
 
     @patch('apps.users.views.http_requests.post')
     def test_html_body_contains_user_name_and_reset_url(self, mock_post):

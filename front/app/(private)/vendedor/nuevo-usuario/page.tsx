@@ -5,20 +5,9 @@ import { useRouter } from "next/navigation";
 import { UserPlus, PencilLine, Trash2, CheckCircle, AlertCircle, Eye, EyeOff, Search, X } from "lucide-react";
 import { useAuth } from "@/app/lib/hooks/useAuth";
 import { Button } from "@/components/ui/Button";
+import { CLIENTE } from "@/lib/config";
 
-const LOCALIDADES = [
-  { value: "8000", label: "Bahía Blanca" },
-  { value: "8103", label: "Ingeniero White" },
-  { value: "8105", label: "General Daniel Cerri" },
-  { value: "8109", label: "Punta Alta" },
-  { value: "8118", label: "Cabildo" },
-  { value: "8150", label: "Coronel Dorrego" },
-  { value: "8153", label: "Monte Hermoso" },
-  { value: "8160", label: "Tornquist" },
-  { value: "8168", label: "Sierra de la Ventana" },
-  { value: "8170", label: "Pigüé" },
-  { value: "7530", label: "Coronel Pringles" },
-];
+const LOCALIDADES = CLIENTE.localidades;
 
 const CATEGORIAS_IVA = [
   { value: "CF", label: "Consumidor Final" },

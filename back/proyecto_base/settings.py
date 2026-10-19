@@ -201,6 +201,8 @@ SIMPLE_JWT = {
 
 RESEND_API_KEY = env('RESEND_API_KEY', default='')
 FRONTEND_URL = env('FRONTEND_URL', default='http://localhost:3000')
+NOMBRE_CLIENTE = env('NOMBRE_CLIENTE', default='Cliente')
+EMAIL_FROM = env('EMAIL_FROM', default='noreply@example.com')
 
 LOGGING = {
     'version': 1,

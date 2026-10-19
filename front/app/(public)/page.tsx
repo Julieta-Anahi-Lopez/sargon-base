@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ArrowRight, Truck, CreditCard, ShoppingBag, MessageCircle } from "lucide-react";
 import { Wave } from "@/components/ui/Wave";
 import { LeafScatter } from "@/components/ui/LeafScatter";
-import { WHATSAPP } from "@/lib/config";
+import { CLIENTE, WHATSAPP } from "@/lib/config";
 
 // Colores de fondo de cada sección — usados por las ondas
 const C_WHITE = "#ffffff";
@@ -26,7 +26,7 @@ export default function HomePage() {
 
         {/* Imagen — absolute sobre la sección completa (incluyendo área de onda) */}
         <div className="hidden lg:block lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-3/5">
-          <Image src="/images/hero.jpg" alt="Productos Ser Natural" fill className="object-cover object-center" priority />
+          <Image src="/images/hero.jpg" alt={`Productos ${CLIENTE.nombre}`} fill className="object-cover object-center" priority />
           {/* Gradiente izquierdo → transición suave hacia el texto */}
           <div className="absolute inset-y-0 left-0 w-2/5 bg-gradient-to-r from-brand-light to-transparent" />
         </div>
@@ -36,7 +36,7 @@ export default function HomePage() {
           <div className="flex items-center w-full lg:w-2/5 px-6 lg:px-12 xl:px-20 py-24">
             <div>
               <span className="block text-brand text-xs font-bold uppercase tracking-widest mb-4">
-                Ser Natural · Productos saludables
+                {CLIENTE.nombre} · Productos saludables
               </span>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-brand leading-none mb-6">
                 ¡Los mejores<br />
@@ -65,7 +65,7 @@ export default function HomePage() {
       {/* ── BIENVENIDA ────────────────────────────────────────────────────── */}
       {/* Sin onda inferior: la transición la maneja la onda superior de la sección siguiente */}
       <section className="relative bg-white -mt-px pt-6 pb-4 px-6 text-center">
-        <h2 className="text-2xl font-bold text-brand mb-2">¡Bienvenidos a Ser Natural!</h2>
+        <h2 className="text-2xl font-bold text-brand mb-2">¡Bienvenidos a {CLIENTE.nombre}!</h2>
         <div className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-6 max-w-3xl mx-auto">
           {FEATURES.map(({ icon: Icon, label, desc }) => (
             <div key={label} className="flex flex-col items-center gap-2 flex-1">
@@ -83,7 +83,7 @@ export default function HomePage() {
       <section className="relative min-h-[580px] flex items-center overflow-hidden -mt-px pt-20 sm:pt-28 pb-20 sm:pb-28">
 
         {/* Imagen a full — se extiende hasta los bordes superior e inferior (onda arriba y onda abajo) */}
-        <Image src="/images/deposito-pasillo.jpg" alt="Depósito Ser Natural" fill className="object-cover object-center" />
+        <Image src="/images/deposito-pasillo.jpg" alt={`Depósito ${CLIENTE.nombre}`} fill className="object-cover object-center" />
         {/* Degradado oscuro sobre el lado derecho para legibilidad del texto */}
         <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/20 to-transparent" />
 
@@ -118,7 +118,7 @@ export default function HomePage() {
           Solicitá toda la información que necesitás. Estamos para ayudarte a que tu negocio sea el mejor del barrio.
         </p>
         <a
-          href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola, quiero consultar sobre productos de Ser Natural")}`}
+          href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(CLIENTE.whatsapp.mensajeFooter)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold px-7 py-3 rounded-full transition-colors"
@@ -132,7 +132,7 @@ export default function HomePage() {
       <section className="relative min-h-[580px] flex items-center overflow-hidden -mt-px pt-20 sm:pt-28 pb-20 sm:pb-28">
 
         {/* Imagen a full color */}
-        <Image src="/images/productos-detalle.jpg" alt="Productos Ser Natural" fill className="object-cover object-center" />
+        <Image src="/images/productos-detalle.jpg" alt={`Productos ${CLIENTE.nombre}`} fill className="object-cover object-center" />
         {/* Degradado oscuro sobre el lado izquierdo para legibilidad del texto */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
 

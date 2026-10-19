@@ -1,11 +1,11 @@
-import { WHATSAPP } from "@/lib/config";
+import { CLIENTE } from "@/lib/config";
 
-const MESSAGE = encodeURIComponent("Hola, quiero hacer una consulta sobre productos de Ser Natural.");
+const MESSAGE = encodeURIComponent(CLIENTE.whatsapp.mensajeFlotante);
 
 export function WhatsAppFloat() {
   return (
     <a
-      href={`https://wa.me/${WHATSAPP}?text=${MESSAGE}`}
+      href={`https://wa.me/${CLIENTE.contacto.whatsapp}?text=${MESSAGE}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactar por WhatsApp"

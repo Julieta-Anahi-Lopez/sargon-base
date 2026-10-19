@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Paleta Ser Natural — manual de marca 2024
+        // Paleta del cliente — personalizar en tailwind.config.ts
         brand: {
           DEFAULT: "#7FAA33", // verde corporativo (pleno 1)
           dark:    "#5C8020", // verde oscuro (hover/contraste)

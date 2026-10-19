@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FileText, ArrowLeft, ScrollText, Copyright, Globe, Lock } from "lucide-react";
+import { CLIENTE } from "@/lib/config";
 
 export default function TerminosCondiciones() {
   return (
@@ -38,14 +39,14 @@ export default function TerminosCondiciones() {
 
           <Section icon={<Copyright className="w-5 h-5 text-brand" />} title="Derecho de Autor y Propiedad Intelectual" alt>
             <p>El contenido del Sitio Web, así como los textos, marcas, logos, fotografías, videos, música, diseños y productos
-              son de uso exclusivo de Ser Natural y en consecuencia están protegidos por derechos de autor, marcas, patentes y otros
+              son de uso exclusivo de {CLIENTE.nombre} y en consecuencia están protegidos por derechos de autor, marcas, patentes y otros
               derechos de propiedad intelectual o industrial existentes bajo la legislación aplicable.</p>
           </Section>
 
           <Section icon={<Globe className="w-5 h-5 text-brand" />} title="El Uso del Sitio Web">
             <p>Usted puede descargar, visualizar o imprimir el contenido de nuestro Sitio Web exclusivamente para uso personal y no
               comercial. Cualquier otro uso, incluyendo la reproducción, modificación, transmisión o difusión del contenido, en todo
-              o en parte y por cualquier medio, está estrictamente prohibido, salvo consentimiento previo por escrito de Ser Natural.</p>
+              o en parte y por cualquier medio, está estrictamente prohibido, salvo consentimiento previo por escrito de {CLIENTE.nombre}.</p>
           </Section>
 
           <Section icon={<Lock className="w-5 h-5 text-brand" />} title="Información Considerada No Confidencial" alt>
@@ -55,7 +56,7 @@ export default function TerminosCondiciones() {
                 Política de Privacidad
               </Link>
               . Le invitamos a leerla atentamente antes de proveernos con tales datos.</p>
-            <p>Cualquier otra información o material remitido a Ser Natural a través de Internet, por correo electrónico o de otra manera,
+            <p>Cualquier otra información o material remitido a {CLIENTE.nombre} a través de Internet, por correo electrónico o de otra manera,
               incluyendo datos, preguntas, comentarios o sugerencias, son y serán tratados como no confidenciales.</p>
           </Section>
 

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Wave } from "@/components/ui/Wave";
 import { LeafScatter } from "@/components/ui/LeafScatter";
+import { CLIENTE } from "@/lib/config";
 
 const C_LIME  = "#EAF3CF"; // brand-light
 const C_WHITE = "#ffffff";
@@ -59,7 +60,7 @@ export default function NosotrosPage() {
             <div className="flex-1">
               <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">Nuestro origen</span>
               <p className="text-brand-dark text-sm leading-relaxed">
-                Ser Natural es un concepto que surge a partir de la necesidad de brindar a los comercios opciones y
+                {CLIENTE.nombre} es un concepto que surge a partir de la necesidad de brindar a los comercios opciones y
                 alternativas para personas con celiaquía. Con ese propósito fuimos los primeros en traer a nuestra
                 localidad una alternativa de alfajores pensada para este público, siendo una solución a un público que
                 en aquella época —ya más de una década— buscaba una opción saludable.
@@ -97,7 +98,7 @@ export default function NosotrosPage() {
             <div key={titulo} className="flex flex-col items-center text-center gap-3">
               <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-sm">
                 {logo ? (
-                  <Image src="/images/logo.png" alt="Ser Natural" width={1752} height={2012} className="h-10 w-auto" />
+                  <Image src="/images/logo.png" alt={CLIENTE.nombre} width={1752} height={2012} className="h-10 w-auto" />
                 ) : Icon ? (
                   <Icon size={26} className="text-brand" />
                 ) : null}
@@ -120,7 +121,7 @@ export default function NosotrosPage() {
           {/* Texto */}
           <div className="flex-1 text-center lg:text-left">
             <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">
-              Ser Natural
+              {CLIENTE.nombre}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
               Un negocio<br />
@@ -136,7 +137,7 @@ export default function NosotrosPage() {
 
           <div className="flex-1 w-full">
             <div className="relative w-full h-80 lg:h-96 rounded-2xl overflow-hidden">
-              <Image src="/images/deposito-panoramica.jpg" alt="Depósito Ser Natural" fill className="object-cover object-[center_80%] scale-125" />
+              <Image src="/images/deposito-panoramica.jpg" alt={`Depósito ${CLIENTE.nombre}`} fill className="object-cover object-[center_80%] scale-125" />
             </div>
           </div>
 
@@ -147,7 +148,7 @@ export default function NosotrosPage() {
       {/* Sin onda en UN NEGOCIO SALUDABLE: la transición la maneja la onda superior de esta sección */}
       <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden -mt-px pt-20 sm:pt-28 pb-20 sm:pb-28">
         {/* Imagen a color puro */}
-        <Image src="/images/suplementos.jpg" alt="Productos Ser Natural" fill className="object-cover object-center" />
+        <Image src="/images/suplementos.jpg" alt={`Productos ${CLIENTE.nombre}`} fill className="object-cover object-center" />
         {/* Overlay oscuro central para legibilidad del texto */}
         <div className="absolute inset-0 bg-black/45" />
 

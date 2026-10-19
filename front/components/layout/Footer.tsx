@@ -2,7 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, Instagram, MessageCircle, MapPin } from "lucide-react";
 
-import { WHATSAPP } from "@/lib/config";
+import { CLIENTE } from "@/lib/config";
+const { contacto, whatsapp: wa, nombre, eslogan } = CLIENTE;
+
 const LINKS = [
   { href: "/politica-privacidad", label: "Política de privacidad" },
   { href: "/terminos",            label: "Términos y condiciones" },
@@ -13,22 +15,22 @@ const SOCIAL = [
   {
     label: "Email",
     icon: Mail,
-    href: "mailto:sernaturaldistribuidora@gmail.com",
+    href: `mailto:${contacto.email}`,
   },
-{
+  {
     label: "Instagram",
     icon: Instagram,
-    href: "https://instagram.com/distribuidora.sernatural",
+    href: `https://instagram.com/${contacto.instagram}`,
   },
   {
     label: "WhatsApp",
     icon: MessageCircle,
-    href: `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola, quiero consultar sobre productos de Ser Natural")}`,
+    href: `https://wa.me/${contacto.whatsapp}?text=${encodeURIComponent(wa.mensajeFooter)}`,
   },
   {
     label: "Ubicación",
     icon: MapPin,
-    href: "https://www.google.com/maps/search/Saavedra+1647+Bahia+Blanca",
+    href: contacto.mapsUrl,
   },
 ];
 
@@ -41,12 +43,12 @@ export function Footer() {
         <div className="flex flex-col items-center gap-2">
           <Image
             src="/images/logo.png"
-            alt="Ser Natural"
+            alt={nombre}
             width={1752}
             height={2012}
             className="h-20 w-auto"
           />
-          <p className="text-white/50 text-xs italic">¡Estamos para ayudarte a que tu negocio crezca!</p>
+          <p className="text-white/50 text-xs italic">{eslogan}</p>
         </div>
 
         {/* Redes sociales */}
@@ -85,7 +87,7 @@ export function Footer() {
 
         {/* Copyright */}
         <p className="text-white/30 text-xs">
-          © {new Date().getFullYear()} Ser Natural. Todos los derechos reservados.
+          © {new Date().getFullYear()} {nombre}. Todos los derechos reservados.
         </p>
 
       </div>

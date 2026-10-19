@@ -518,10 +518,11 @@ class CustomTokenRefreshView(TokenRefreshView):
 
 
 def _send_reset_email(to_email: str, nombre: str, reset_url: str) -> None:
+    nombre_cliente = settings.NOMBRE_CLIENTE
     html = f"""
     <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px;">
       <p style="color:#2A5215;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;">
-        Ser Natural
+        {nombre_cliente}
       </p>
       <h2 style="color:#1c1917;margin-top:8px;">Recuperación de contraseña</h2>
       <p style="color:#57534e;">Hola {nombre},</p>
@@ -547,9 +548,9 @@ def _send_reset_email(to_email: str, nombre: str, reset_url: str) -> None:
             "Content-Type": "application/json",
         },
         json={
-            "from": "Ser Natural <noreply@aloedevs.com>",
+            "from": settings.EMAIL_FROM,
             "to": [to_email],
-            "subject": "Recuperación de contraseña - Ser Natural",
+            "subject": f"Recuperación de contraseña - {nombre_cliente}",
             "html": html,
         },
         timeout=10,
