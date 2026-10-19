@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Ser Natural — API",
-    "description": "Colección completa de endpoints de la API REST de Ser Natural.\n\n**Cómo usar:**\n1. Ejecutar la request «Login» — guarda automáticamente los tokens en las variables de colección `access_token` y `refresh_token`.\n2. Todas las requests con autenticación usan `{{access_token}}` en el header `Authorization: Bearer`.\n3. Cambiar `base_url` si el backend corre en otro host/puerto.",
+    "name": "sargon-base — API",
+    "description": "Colección completa de endpoints de la API REST.\n\n**Cómo usar:**\n1. Ejecutar la request «Login» — guarda automáticamente los tokens en las variables de colección `access_token` y `refresh_token`.\n2. Todas las requests con autenticación usan `{{access_token}}` en el header `Authorization: Bearer`.\n3. Cambiar `base_url` si el backend corre en otro host/puerto.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [

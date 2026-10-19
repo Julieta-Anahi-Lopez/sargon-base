@@ -1,7 +1,7 @@
 services:
   backend:
     build: .
-    container_name: ser_natural_backend
+    container_name: ${COMPOSE_PROJECT_NAME:-sargon}_backend
     command: >
       sh -c "
         python manage.py runserver 0.0.0.0:8000
@@ -15,17 +15,17 @@ services:
     depends_on:
       - redis
     networks:
-      - ser_natural_net
+      - app_net
     restart: always
 
   redis:
     image: redis:7-alpine
-    container_name: ser_natural_redis
+    container_name: ${COMPOSE_PROJECT_NAME:-sargon}_redis
     ports:
       - "6391:6379"
     networks:
-      - ser_natural_net
+      - app_net
     restart: always
 
 networks:
-  ser_natural_net:
+  app_net:

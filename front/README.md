@@ -1,6 +1,39 @@
-# Ser Natural — Frontend
+# sargon-base — Frontend
 
-Interfaz web B2B para Ser Natural, distribuidora de productos naturales. Permite a clientes (comercios) navegar el catálogo con precios mayoristas, gestionar el carrito y realizar pedidos. Los vendedores pueden crear cuentas para nuevos clientes.
+Interfaz web B2B para distribuidoras mayoristas. Permite a clientes (comercios) navegar el catálogo con precios mayoristas, gestionar el carrito y realizar pedidos. Los vendedores pueden crear y editar cuentas de clientes.
+
+## Configuración del cliente
+
+Editá `lib/config.ts` para adaptar el template a un nuevo cliente:
+
+```ts
+export const CLIENTE = {
+  nombre:   "Nombre del Cliente",
+  eslogan:  "Tu eslogan aquí",
+  contacto: {
+    whatsapp:  "549XXXXXXXXXX",   // formato internacional sin +
+    email:     "info@cliente.com",
+    instagram: "usuario",         // sin @
+    direccion: "Dirección completa",
+    mapsUrl:   "https://maps.google.com/...",
+  },
+  whatsapp: {
+    mensajeFlotante: "Hola, quiero hacer una consulta.",
+    mensajeFooter:   "Hola, quiero consultar.",
+  },
+  seo: {
+    titulo:      "Nombre del Cliente",
+    descripcion: "Descripción para SEO.",
+  },
+  localidades: [ /* lista de { value, label } */ ],
+  features: {
+    registroLibre:  false,
+    moduloVendedor: true,
+  },
+};
+```
+
+La paleta de colores se define en `tailwind.config.ts`.
 
 ## Stack
 
@@ -13,16 +46,6 @@ Interfaz web B2B para Ser Natural, distribuidora de productos naturales. Permite
 | Redux Toolkit | — |
 | Lucide React | — |
 | Jest + React Testing Library | — |
-
-## Paleta de colores
-
-| Token Tailwind | Color | Uso |
-|---|---|---|
-| `brand` | Verde oscuro (`#2D5016`) | Texto principal, fondos de énfasis |
-| `brand-light` | Lima claro (`#E8F2A8`) | Fondos de sección, degradados |
-| `accent` | Lima vibrante (`#A8C F25`) | Acentos, hovers |
-
-Los colores se definen en `tailwind.config.ts`.
 
 ## Estructura de rutas (App Router)
 
@@ -57,7 +80,7 @@ El middleware (`middleware.ts`) protege las rutas privadas con JWT y bloquea `/r
 | `catusu` | Rol | Acceso |
 |---|---|---|
 | `C` | Cliente | Catálogo, carrito, pedidos propios |
-| `V` | Vendedor | Todo lo anterior + creación de usuarios |
+| `V` | Vendedor | Todo lo anterior + creación/edición de usuarios |
 
 No existe auto-registro. El vendedor crea las cuentas de los clientes desde `/vendedor/nuevo-usuario`.
 
@@ -80,36 +103,33 @@ El flujo es completamente stateless (no usa Redux):
 | `filtersSlice` | Filtros activos del catálogo (rubro, marca, búsqueda) |
 | `orderSlice` | Envío y confirmación de pedidos |
 
-## Configuración
-
-### Variables de entorno
+## Variables de entorno
 
 ```env
 # .env.local
 NEXT_PUBLIC_API_URL=http://localhost:8004/api
 ```
 
-> `NEXT_PUBLIC_API_URL` es usado por todas las páginas que llaman al backend, incluyendo las de recuperación de contraseña.
+Ver `.env.example` para el template completo.
 
-### Desarrollo local
+## Desarrollo local
 
 ```bash
 npm install
 npm run dev       # http://localhost:3000
 ```
 
-### Con Docker
+## Con Docker
 
-El servicio corre como `SER_NATURAL_FRONTEND` en el puerto **3005**.
+El nombre del contenedor se toma de `COMPOSE_PROJECT_NAME` (default: `sargon`):
 
 ```bash
-docker compose up --build
-# Disponible en http://localhost:3005
+cd docker/
+COMPOSE_PROJECT_NAME=nombre_cliente docker compose up --build
+# Disponible en http://localhost:3006
 ```
 
 ## Build y verificación
-
-Antes de deployar, verificar que el build de producción pase sin errores:
 
 ```bash
 npm run build
@@ -120,47 +140,14 @@ Errores de TypeScript o ESLint en esta etapa bloquean el deploy — son intencio
 ## Tests
 
 ```bash
-# Ejecutar todos los tests del frontend
 npm test
-
-# Modo interactivo (watch)
 npm test -- --watch
-
-# Con coverage
 npm test -- --coverage
 ```
 
-Suite actual distribuida en:
+## Pendientes de contenido (por cliente)
 
-| Archivo | Tests | Qué cubre |
-|---|---|---|
-| `__tests__/redux/authSlice.test.ts` | 8 | Estado inicial, login thunk, logout, initializeAuth |
-| `__tests__/redux/cartSlice.test.ts` | — | addToCart, removeFromCart, clearCart, localStorage |
-| `__tests__/redux/orderSlice.test.ts` | 4 | Estado inicial, resetOrder, submitOrder thunk |
-| `__tests__/redux/filtersSlice.test.ts` | — | Filtros de catálogo |
-| `__tests__/components/Button.test.tsx` | 10 | Variantes, loading, disabled, onClick |
-| `__tests__/components/Modal.test.tsx` | — | Apertura/cierre, contenido |
-| `__tests__/components/ProductCard.test.tsx` | — | Renderizado, add al carrito |
-| `__tests__/components/ScrollToTop.test.tsx` | — | Visibilidad según scroll |
-| `__tests__/hooks/useAuth.test.ts` | — | Estado de autenticación, logout |
-| `__tests__/middleware.test.ts` | 11 | Rutas públicas/privadas/auth/bloqueadas + recuperar-password/nueva-password |
-| `__tests__/pages/login.test.tsx` | 9 | Campos, eye toggle, link recuperar contraseña, ausencia de /registro |
-| `__tests__/pages/nuevo-usuario.test.tsx` | 8 | Validaciones del formulario, submit exitoso |
-| `__tests__/pages/recuperar-password.test.tsx` | 7 | Renderizado, éxito, errores de red/servidor, lowercase email |
-| `__tests__/pages/nueva-password.test.tsx` | 12 | Sin token, validaciones, submit, éxito, errores |
-| `__tests__/utils/formatters.test.ts` | — | Formatters de precio y fecha |
-
-> Los tests del backend (51 tests) corren por separado en el repositorio `ser_natural/`. Ver `GUIA_TESTS.md` para más detalles.
-
-## Documentación adicional
-
-- `DOCUMENTACION_TECNICA.md` — arquitectura detallada, componentes y convenciones
-- `GUIA_TESTS.md` — guía completa de la suite de tests (front + back)
-
-## Pendientes de contenido
-
-- [ ] Logo definitivo de Ser Natural (reemplazar icono `<Leaf>` de Lucide)
-- [ ] Imágenes reales de productos / secciones de home
-- [ ] Número de WhatsApp de contacto para el footer
-- [ ] Configuración de dominio de producción en `ALLOWED_HOSTS` y CORS del backend
-- [ ] Política de privacidad y términos con contenido real
+- [ ] Logo del cliente (reemplazar `/images/logo.png`)
+- [ ] Imágenes de hero y secciones (`/images/hero.jpg`, etc.)
+- [ ] Texto real en `/nosotros`, `/politica-privacidad` y `/terminos`
+- [ ] Configurar `COMPOSE_PROJECT_NAME` en el entorno de producción

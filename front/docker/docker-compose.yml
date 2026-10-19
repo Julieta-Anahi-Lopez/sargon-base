@@ -5,7 +5,7 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: SER_NATURAL_FRONTEND
+    container_name: ${COMPOSE_PROJECT_NAME:-sargon}_frontend
     restart: always
     volumes:
       - ..:/app
@@ -14,37 +14,7 @@ services:
     ports:
       - "3006:3000"
     networks:
-      - ser_natural_net
+      - app_net
 
 networks:
-  ser_natural_net:
-    
-
-
-
-
-
-
-
-
-# version: '3'
-# services:
-#   frontend:
-#     build:
-#       context: ..
-#       dockerfile: docker/Dockerfile
-#     ports:
-#       - "3000:3000"
-#     volumes:
-#       - ../:/app
-#       - /app/node_modules
-#     stdin_open: true
-#     tty: true
-#     environment:
-#       - NODE_ENV=development
-#     networks:
-#       - proyecto_base_net
-
-# networks:
-#   proyecto_base_net:
-#     external: true
+  app_net:
