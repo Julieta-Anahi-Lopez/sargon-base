@@ -110,7 +110,7 @@ function ImageCarousel({ imagenes, nombre, sinStock }: CarouselProps) {
 
   return (
     <div
-      className="relative aspect-square overflow-hidden bg-transparent select-none"
+      className="relative aspect-square overflow-hidden bg-gray-50 select-none"
       onTouchStart={hasMultiple ? onTouchStart : undefined}
       onTouchEnd={hasMultiple ? onTouchEnd : undefined}
     >
@@ -223,20 +223,9 @@ export function ProductCard({ product, isAuthenticated }: Props) {
   return (
     <>
     <article
-      className="group relative flex flex-col overflow-hidden rounded-sm cursor-pointer"
+      className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 shadow-sm hover:shadow-card-hover transition-shadow bg-white cursor-pointer"
       onClick={() => setModalOpen(true)}
     >
-
-      {/* Acento de esquina superior izquierda */}
-      <svg
-        className="absolute top-0 left-0 z-10 pointer-events-none text-brand"
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        aria-hidden="true"
-      >
-        <path d="M 0 0 L 20 0 Q 5 5 0 20 Z" fill="currentColor" />
-      </svg>
 
       <ImageCarousel
         imagenes={product.imagenes}
@@ -256,16 +245,16 @@ export function ProductCard({ product, isAuthenticated }: Props) {
         </div>
 
         {/* Name */}
-        <p className="text-sm font-medium text-brand-dark leading-snug flex-1">
+        <p className="text-sm font-medium text-gray-800 leading-snug flex-1">
           {capitalizar(product.nombre)}
         </p>
 
         {isAuthenticated ? (
           <>
-            <p className="text-lg font-bold text-brand">
+            <p className="text-lg font-bold text-brand-darker">
               ${precio?.toLocaleString("es-AR", { minimumFractionDigits: 2 })}
             </p>
-            <p className="text-[11px] text-brand-dark/70 leading-tight">
+            <p className="text-[11px] text-gray-400 leading-tight">
               Los precios no incluyen IVA
             </p>
 
@@ -305,7 +294,7 @@ export function ProductCard({ product, isAuthenticated }: Props) {
                 type="button"
                 onClick={(e) => add(e)}
                 disabled={sinStock}
-                className="flex items-center justify-center gap-1.5 w-full py-2 rounded-lg bg-brand hover:bg-brand-dark disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors"
+                className="flex items-center justify-center gap-1.5 w-full py-2 rounded-lg bg-brand-dark hover:bg-brand-darker disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors"
               >
                 <ShoppingCart size={15} />
                 Agregar
