@@ -44,7 +44,7 @@ export function MobileNav({ open, onClose }: Props) {
       <div className="fixed top-0 right-0 bottom-0 z-50 w-72 bg-brand flex flex-col drawer-enter shadow-drawer">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/20">
-          <span className="text-sm font-semibold text-accent uppercase tracking-widest">Menú</span>
+          <span className="text-sm font-semibold text-white/60 uppercase tracking-widest">Menú</span>
           <button onClick={onClose} className="p-1.5 text-white/70 hover:text-white rounded-md hover:bg-brand-dark transition-colors">
             <X size={20} />
           </button>
@@ -67,7 +67,7 @@ export function MobileNav({ open, onClose }: Props) {
               onClick={onClose}
               className="flex items-center gap-3 px-3 py-3 rounded-lg text-white/80 hover:text-white hover:bg-brand-dark transition-colors text-sm"
             >
-              <span className="text-accent">{icon}</span>
+              <span className="text-white/70">{icon}</span>
               {label}
             </Link>
           ))}
@@ -87,7 +87,7 @@ export function MobileNav({ open, onClose }: Props) {
             <Link
               href="/login"
               onClick={onClose}
-              className="flex items-center justify-center gap-2 w-full px-3 py-3 rounded-lg bg-accent hover:bg-accent-dark text-brand-dark text-sm font-medium transition-colors"
+              className="flex items-center justify-center gap-2 w-full px-3 py-3 rounded-lg bg-accent hover:bg-accent-dark text-white text-sm font-medium transition-colors"
             >
               <LogIn size={18} />
               Iniciar sesión

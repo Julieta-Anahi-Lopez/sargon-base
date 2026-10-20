@@ -4,22 +4,17 @@
 
 @layer base {
   :root {
-    --bg:          #EAF3CF; /* brand-light — fondo general */
-    --bg-subtle:   #D5E9A8; /* tinte medio — fondos secundarios */
-    --border:      #B5CC78; /* borde verde suave */
-    --text:        #2C4A10; /* verde oscuro — texto principal */
-    --text-muted:  #5A8030; /* verde medio — texto secundario */
-    --surface:     #ffffff; /* blanco — tarjetas y superficies */
-    --header:      #5C8020; /* brand-dark — header/footer */
-    --brand:       #7FAA33; /* verde corporativo (pleno 1) */
-    --brand-dark:  #5C8020; /* verde oscuro (hover/contraste) */
-    --brand-light: #EAF3CF; /* verde muy claro (fondos) */
-    --accent:      #EEDF38; /* amarillo corporativo (pleno 2) */
-    --accent-dark: #C9BB20; /* amarillo oscuro (hover) */
-  }
-
-  * {
-    border-color: var(--border);
+    /*
+     * Variables usadas por tailwind.config.ts:
+     *   surface  → bg-surface (tarjetas, modales)
+     *   bg-subtle → bg-subtle (fondos sutiles, skeleton)
+     *
+     * Los colores de marca (brand, accent) se configuran ÚNICAMENTE
+     * en tailwind.config.ts — no duplicar aquí.
+     */
+    --surface:         #ffffff;
+    --bg-subtle:       #f3f4f6; /* neutral — skeleton base */
+    --skeleton-shimmer:#e5e7eb; /* neutral — skeleton highlight */
   }
 
   html {
@@ -27,29 +22,23 @@
   }
 
   body {
-    background-color: var(--bg);
-    color: var(--text);
+    background-color: #ffffff;
+    color: #111827;
     font-family: var(--font-montserrat), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 }
 
 @layer utilities {
-  .text-brand    { color: var(--brand); }
-  .bg-brand      { background-color: var(--brand); }
-  .bg-surface    { background-color: var(--surface); }
-  .bg-subtle     { background-color: var(--bg-subtle); }
-  .border-brand  { border-color: var(--brand); }
-  .text-accent   { color: var(--accent); }
-  .bg-accent     { background-color: var(--accent); }
-  .border-accent { border-color: var(--accent); }
+  .bg-surface { background-color: var(--surface); }
+  .bg-subtle  { background-color: var(--bg-subtle); }
 
   /* Skeleton animation */
   .skeleton {
     background: linear-gradient(
       90deg,
       var(--bg-subtle) 25%,
-      var(--border) 50%,
+      var(--skeleton-shimmer) 50%,
       var(--bg-subtle) 75%
     );
     background-size: 200% 100%;

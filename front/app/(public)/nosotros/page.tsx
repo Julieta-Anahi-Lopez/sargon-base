@@ -111,12 +111,12 @@ export default function NosotrosPage() {
       <section className="bg-brand py-20 px-6 border-t border-white/10">
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12">
           <div className="flex-1 text-center lg:text-left">
-            <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">
+            <span className="block text-brand-light/70 text-xs font-bold uppercase tracking-widest mb-3">
               {CLIENTE.nombre}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-5">
               Lorem ipsum<br />
-              <span className="text-accent">dolor sit</span>
+              <span className="text-brand-light">dolor sit</span>
             </h2>
             <p className="text-white/80 text-sm leading-relaxed mb-3">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

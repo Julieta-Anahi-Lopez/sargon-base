@@ -69,7 +69,7 @@ export function Header() {
             ) : (
               <Link
                 href="/login"
-                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-md text-base font-medium bg-accent hover:bg-accent-dark text-brand-dark transition-colors"
+                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-md text-base font-medium bg-accent hover:bg-accent-dark text-white transition-colors"
               >
                 <User size={15} />
                 Ingresar
@@ -91,7 +91,7 @@ export function Header() {
                   className="invert opacity-70 group-hover:opacity-100 transition-opacity"
                 />
                 {cartCount > 0 && (
-                  <span className="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] bg-accent text-brand-dark text-[10px] font-bold rounded-full flex items-center justify-center px-1">
+                  <span className="absolute top-0.5 right-0.5 min-w-[18px] h-[18px] bg-accent text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1">
                     {cartCount > 99 ? "99+" : cartCount}
                   </span>
                 )}

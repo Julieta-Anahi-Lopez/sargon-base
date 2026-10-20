@@ -72,13 +72,21 @@ Entregar en alta resolución. Ver tamaños sugeridos abajo.
 
 | Token | Color | Uso |
 |---|---|---|
-| `brand` | | Verde/color principal (textos, fondos de énfasis) |
-| `brand-dark` | | Versión oscura del principal (hover, header) |
-| `brand-light` | | Versión muy clara (fondos de sección) |
-| `accent` | | Color de acento (botones, highlights) |
+| `brand` | | Color primario (textos, botones principales, fondos de énfasis) |
+| `brand-dark` | | Versión oscura (hover de botones, header/footer) |
+| `brand-darker` | | La más oscura (texto sobre fondos claros — asegurar contraste) |
+| `brand-light` | | Versión muy clara (fondos de sección alternados) |
+| `accent` | | Color de acento (CTAs secundarios, highlights) |
 | `accent-dark` | | Versión oscura del acento (hover) |
 
+> **Fuente única:** los colores se configuran **solo** en `front/tailwind.config.ts`.
+> No hay que tocar `globals.css` para los colores de marca.
+>
 > Pedirle al cliente el manual de marca o los colores en hex. Si no tiene, definirlos juntos.
+>
+> **Contraste:** verificar que `text-white` sobre `bg-brand` y `bg-accent` tenga contraste
+> suficiente. Si el color primario es muy claro (ej: amarillo), usar `text-brand-darker`
+> para texto sobre fondos blancos en lugar de `text-brand`.
 
 ---
 
@@ -141,6 +149,8 @@ Marcar cuando cada ítem fue recibido y cargado:
 - [ ] Email/Resend configurado
 - [ ] Dominio definido
 - [ ] `front/lib/config.ts` actualizado
+- [ ] `front/tailwind.config.ts` actualizado con paleta del cliente
+- [ ] `front/public/images/logo.png` reemplazado
 - [ ] `back/docker/.env` creado y completo
 - [ ] Parámetros insertados en la BD
 - [ ] `npm run build` sin errores

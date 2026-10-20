@@ -89,7 +89,7 @@ export default function HomePage() {
             </h2>
             <Link
               href="/catalogo"
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-brand-darker font-semibold px-7 py-3.5 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg transition-colors"
             >
               Conocé nuestros productos <ArrowRight size={18} />
             </Link>

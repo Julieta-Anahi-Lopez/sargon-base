@@ -3,7 +3,7 @@ import type { Rubro, Marca, FiltersState } from "@/types";
 import { capitalizar } from "@/lib/format";
 
 const verTodosClass =
-  "inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full border-2 border-brand-dark bg-accent text-base font-bold text-brand-dark shadow-sm hover:bg-accent-dark transition-colors";
+  "inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full border-2 border-accent bg-accent text-base font-bold text-white shadow-sm hover:bg-accent-dark transition-colors";
 
 /** Describe en palabras qué está mirando el usuario ("Aceites comestibles › Chia"). */
 export function describirSeleccion(filters: FiltersState, rubros: Rubro[], marcas: Marca[]): string {

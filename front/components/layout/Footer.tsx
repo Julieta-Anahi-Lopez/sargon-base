@@ -36,7 +36,7 @@ const SOCIAL = [
 
 export function Footer() {
   return (
-    <footer className="bg-brand-dark text-white border-t-4 border-brand">
+    <footer className="bg-brand-dark text-white border-t-4 border-accent">
       <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 pt-12 pb-10 flex flex-col items-center gap-8">
 
         {/* Logo */}
@@ -69,7 +69,7 @@ export function Footer() {
 
         {/* Enlaces de interés */}
         <div className="flex flex-col items-center gap-3">
-          <p className="text-accent font-bold text-sm uppercase tracking-widest">
+          <p className="text-brand-light/70 font-bold text-sm uppercase tracking-widest">
             Enlaces de interés
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
