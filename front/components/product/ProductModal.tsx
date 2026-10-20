@@ -21,9 +21,9 @@ function StockBadge({ stock }: { stock: number }) {
   if (stock <= 0)
     return <span className="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded-full bg-red-500 text-white">Sin stock</span>;
   if (stock <= 5)
-    return <span className="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded-full bg-accent text-brand">Últimas {stock} unidades</span>;
+    return <span className="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded-full bg-accent text-white">Últimas {stock} unidades</span>;
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-brand text-white">
+    <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-dark text-white">
       <span className="w-1.5 h-1.5 rounded-full bg-white/70" />
       En stock
     </span>
@@ -178,28 +178,28 @@ export function ProductModal({ product, isAuthenticated, onClose }: Props) {
           <div className="flex flex-col gap-3 p-4 pt-2 sm:pt-4">
             {/* Código + stock */}
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-brand/15 text-brand uppercase tracking-wider">
+              <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-gray-100 text-gray-600 uppercase tracking-wider">
                 {product.codigo}
               </span>
               <StockBadge stock={product.stock} />
             </div>
 
             {/* Nombre completo */}
-            <h2 className="text-base font-semibold text-brand-dark leading-snug">
+            <h2 className="text-base font-semibold text-gray-800 leading-snug">
               {capitalizar(product.nombre)}
             </h2>
 
             {/* Observaciones */}
             {product.observ && (
-              <p className="text-sm text-brand-dark/80 leading-relaxed">{product.observ}</p>
+              <p className="text-sm text-gray-600 leading-relaxed">{product.observ}</p>
             )}
 
             {isAuthenticated ? (
               <div className="flex flex-col gap-2 mt-auto pt-2">
-                <p className="text-2xl font-bold text-brand">
+                <p className="text-2xl font-bold text-brand-darker">
                   ${precio?.toLocaleString("es-AR", { minimumFractionDigits: 2 })}
                 </p>
-                <p className="text-xs text-brand-dark/70 leading-tight">
+                <p className="text-xs text-gray-400 leading-tight">
                   Los precios no incluyen IVA
                 </p>
 
@@ -208,7 +208,7 @@ export function ProductModal({ product, isAuthenticated, onClose }: Props) {
                     <button type="button" onClick={remove} className="flex-1 flex items-center justify-center py-2.5 text-brand hover:bg-brand/10 transition-colors" aria-label="Quitar uno">
                       <Minus size={16} />
                     </button>
-                    <span className="px-4 text-sm font-semibold text-brand-dark">{cartItem.cantidad}</span>
+                    <span className="px-4 text-sm font-semibold text-gray-700">{cartItem.cantidad}</span>
                     <button type="button" onClick={add} disabled={sinStock} className="flex-1 flex items-center justify-center py-2.5 text-brand hover:bg-brand/10 transition-colors disabled:opacity-40" aria-label="Agregar uno más">
                       <Plus size={16} />
                     </button>
@@ -218,7 +218,7 @@ export function ProductModal({ product, isAuthenticated, onClose }: Props) {
                     type="button"
                     onClick={add}
                     disabled={sinStock}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-brand hover:bg-brand-dark disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors mt-1"
+                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-brand-dark hover:bg-brand-darker disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors mt-1"
                   >
                     <ShoppingCart size={16} />
                     Agregar al carrito
@@ -226,7 +226,7 @@ export function ProductModal({ product, isAuthenticated, onClose }: Props) {
                 )}
               </div>
             ) : (
-              <p className="text-sm text-brand-dark/70 italic mt-auto pt-2">
+              <p className="text-sm text-gray-500 italic mt-auto pt-2">
                 Iniciá sesión para ver el precio
               </p>
             )}

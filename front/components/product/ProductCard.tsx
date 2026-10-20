@@ -28,13 +28,13 @@ function StockBadge({ stock }: { stock: number }) {
   }
   if (stock <= 5) {
     return (
-      <span className="inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-full bg-accent text-brand shrink-0">
+      <span className="inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded-full bg-accent text-white shrink-0">
         Últimas {stock}
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-brand text-white shrink-0">
+    <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-brand-dark text-white shrink-0">
       <span className="w-1.5 h-1.5 rounded-full bg-white/70 shrink-0" />
       En stock
     </span>
@@ -238,7 +238,7 @@ export function ProductCard({ product, isAuthenticated }: Props) {
 
         {/* Code + stock */}
         <div className="flex items-center justify-between gap-1 min-w-0">
-          <span className="inline-block text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-brand/15 text-brand uppercase tracking-wider truncate">
+          <span className="inline-block text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 uppercase tracking-wider truncate">
             {product.codigo}
           </span>
           <StockBadge stock={product.stock} />
