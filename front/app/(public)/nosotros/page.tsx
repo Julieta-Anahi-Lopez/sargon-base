@@ -2,13 +2,14 @@ import { Store, Users, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Wave } from "@/components/ui/Wave";
-import { LeafScatter } from "@/components/ui/LeafScatter";
 import { CLIENTE } from "@/lib/config";
 
-const C_LIME  = "#EAF3CF"; // brand-light
-const C_WHITE = "#ffffff";
-const C_GREEN = "#7FAA33"; // brand
-const C_DARK  = "#5C8020"; // brand-dark (footer)
+// Actualizar estos valores para que coincidan con brand, brand-dark y brand-light
+// definidos en tailwind.config.ts
+const C_BRAND_LIGHT = "#EAF3CF";
+const C_WHITE       = "#ffffff";
+const C_BRAND       = "#7FAA33";
+const C_BRAND_DARK  = "#5C8020";
 
 const STATS: {
   icon?: React.ComponentType<{ size: number; className: string }>;
@@ -18,18 +19,18 @@ const STATS: {
 }[] = [
   {
     logo: true,
-    titulo: "Variedad y precio",
-    desc: "Amplia diversidad de productos para que puedas elegir al mejor precio.",
+    titulo: "Lorem ipsum dolor",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam purus.",
   },
   {
     icon: Store,
-    titulo: "Amplia cobertura",
-    desc: "Abastecemos centro de la provincia de Buenos Aires y sur del país.",
+    titulo: "Lorem ipsum dolor",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam purus.",
   },
   {
     icon: Users,
-    titulo: "Atención personalizada",
-    desc: "¿Necesitás abrir tu negocio? En nuestro rubro somos especialistas en asesoramiento. ¡Consultanos!",
+    titulo: "Lorem ipsum dolor",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam purus sit.",
   },
 ];
 
@@ -37,7 +38,6 @@ const STATS: {
 export default function NosotrosPage() {
   return (
     <div className="flex flex-col relative">
-      <LeafScatter />
 
       {/* ── HERO NOSOTROS ────────────────────────────────────────────────── */}
       <section className="relative bg-brand-light pt-20 pb-28 px-6 text-center overflow-hidden">
@@ -58,37 +58,35 @@ export default function NosotrosPage() {
 
           <div className="flex flex-col sm:flex-row gap-8">
             <div className="flex-1">
-              <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">Nuestro origen</span>
+              <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">Lorem ipsum</span>
               <p className="text-brand-dark text-sm leading-relaxed">
-                {CLIENTE.nombre} es un concepto que surge a partir de la necesidad de brindar a los comercios opciones y
-                alternativas para personas con celiaquía. Con ese propósito fuimos los primeros en traer a nuestra
-                localidad una alternativa de alfajores pensada para este público, siendo una solución a un público que
-                en aquella época —ya más de una década— buscaba una opción saludable.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
               </p>
             </div>
             <div className="flex-1">
-              <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">Hoy</span>
+              <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">Lorem ipsum</span>
               <p className="text-brand-dark text-sm leading-relaxed">
-                Hoy podemos decir con mucho orgullo que nuestra empresa familiar, ya convertida en una Distribuidora y
-                Autoservicio Mayorista referente en nuestra área, cuenta con una gama infinitamente más amplia de
-                productos orientados a la alimentación saludable: celiaquía, diabetes, intolerancia a la lactosa,
-                naturismo, veganismo, vegetarianismo, low carb/keto y más.
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+                rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur.
               </p>
             </div>
           </div>
 
-          {/* Callout — la impronta */}
+          {/* Callout */}
           <div className="rounded-2xl bg-brand-light border-l-4 border-accent px-6 py-5">
             <p className="text-brand font-semibold text-base leading-relaxed">
-              Siempre es y será nuestra impronta y objetivo brindar, más allá del producto, una atención y un servicio
-              ejemplar a nuestros clientes —{" "}
-              <span className="text-brand font-black">los comerciantes</span>{" "}
-              — ayudándolos, asesorándolos y brindándoles herramientas para su crecimiento dentro de este rubro.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua —{" "}
+              <span className="text-brand font-black">lorem ipsum</span>{" "}
+              — ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
             </p>
           </div>
 
         </div>
-        <Wave fill={C_LIME} flip />
+        <Wave fill={C_BRAND_LIGHT} flip />
       </section>
 
       {/* ── TRES COLUMNAS ────────────────────────────────────────────────── */}
@@ -111,10 +109,10 @@ export default function NosotrosPage() {
             </div>
           ))}
         </div>
-        <Wave fill={C_GREEN} />
+        <Wave fill={C_BRAND} />
       </section>
 
-      {/* ── UN NEGOCIO SALUDABLE ─────────────────────────────────────────── */}
+      {/* ── SECCIÓN DESTACADA ────────────────────────────────────────────── */}
       <section className="relative bg-brand pt-16 pb-4 px-6 overflow-hidden">
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-10">
 
@@ -124,14 +122,14 @@ export default function NosotrosPage() {
               {CLIENTE.nombre}
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
-              Un negocio<br />
-              <span className="text-accent">saludable</span>
+              Lorem ipsum<br />
+              <span className="text-accent">dolor sit</span>
             </h2>
             <p className="text-white/80 text-sm leading-relaxed mb-3">
-              Más de 12 años siendo natural. Desde nuestros comienzos, apostamos por un modelo de negocio basado en la salud, la calidad y el compromiso con nuestros clientes.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud.
             </p>
             <p className="text-white/70 text-sm leading-relaxed">
-              Nuestra misión es acercar los mejores productos naturales a cada punto de venta, acompañando el crecimiento de nuestros distribuidores con herramientas, precios y atención de primer nivel.
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam eaque ipsa quae ab illo inventore veritatis.
             </p>
           </div>
 
@@ -153,13 +151,13 @@ export default function NosotrosPage() {
         <div className="absolute inset-0 bg-black/45" />
 
         {/* Onda superior — imagen llega hasta acá (fill = color de la sección anterior bg-brand) */}
-        <Wave fill={C_GREEN} top />
+        <Wave fill={C_BRAND} top />
         {/* Onda inferior → transición directa al brand-dark del footer */}
-        <Wave fill={C_DARK} />
+        <Wave fill={C_BRAND_DARK} />
 
         <div className="relative z-10 text-center px-6">
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
-            ¡Estamos para ayudarte a que tu negocio crezca!
+            {CLIENTE.eslogan}
           </h2>
           <Link
             href="/catalogo"

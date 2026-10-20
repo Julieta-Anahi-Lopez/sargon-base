@@ -2,24 +2,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Truck, CreditCard, ShoppingBag, MessageCircle } from "lucide-react";
 import { Wave } from "@/components/ui/Wave";
-import { LeafScatter } from "@/components/ui/LeafScatter";
 import { CLIENTE, WHATSAPP } from "@/lib/config";
 
-// Colores de fondo de cada sección — usados por las ondas
-const C_WHITE = "#ffffff";
-const C_DARK  = "#5C8020"; // brand-dark (footer)
+// Actualizar estos valores para que coincidan con brand-dark definido en tailwind.config.ts
+const C_WHITE      = "#ffffff";
+const C_BRAND_DARK = "#5C8020";
 
 const FEATURES = [
-  { icon: Truck,        label: "Reparto sin cargo", desc: "Entregamos en Bahía Blanca sin costo adicional." },
-  { icon: CreditCard,   label: "Pagá con tarjeta", desc: "Aceptamos todas las tarjetas de crédito y débito." },
-  { icon: ShoppingBag,  label: "Mínimo de compra", desc: "Consultá el mínimo vigente con tu vendedor." },
+  { icon: Truck,        label: "Reparto sin cargo", desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+  { icon: CreditCard,   label: "Pagá con tarjeta",  desc: "Aceptamos todas las tarjetas de crédito y débito." },
+  { icon: ShoppingBag,  label: "Mínimo de compra",  desc: "Consultá el mínimo vigente con tu vendedor." },
 ];
 
 
 export default function HomePage() {
   return (
     <div className="flex flex-col relative">
-      <LeafScatter />
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-brand-light pb-20 min-h-[600px]">
@@ -36,15 +34,15 @@ export default function HomePage() {
           <div className="flex items-center w-full lg:w-2/5 px-6 lg:px-12 xl:px-20 py-24">
             <div>
               <span className="block text-brand text-xs font-bold uppercase tracking-widest mb-4">
-                {CLIENTE.nombre} · Productos saludables
+                {CLIENTE.nombre}
               </span>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-brand leading-none mb-6">
-                ¡Los mejores<br />
-                <span className="text-accent">productos</span><br />
-                naturales!
+                Lorem ipsum<br />
+                <span className="text-accent">dolor sit</span><br />
+                amet!
               </h1>
               <p className="text-brand-dark text-lg max-w-sm leading-relaxed mb-10">
-                ¡Todo lo saludable que necesitas para tu negocio! Siempre tratando de ofrecer lo mejor al mejor precio.
+                {CLIENTE.descripcion}
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link href="/catalogo" className="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold px-7 py-3.5 rounded-lg transition-colors">
@@ -139,7 +137,7 @@ export default function HomePage() {
         {/* Onda superior — imagen llega hasta acá */}
         <Wave fill={C_WHITE} top />
         {/* Onda inferior → transición directa al brand-dark del footer */}
-        <Wave fill={C_DARK} />
+        <Wave fill={C_BRAND_DARK} />
 
         <div className="relative z-10 w-full flex justify-start py-8">
           <div className="w-full lg:w-2/5 px-6 lg:px-12 xl:px-20 text-center lg:text-left">
