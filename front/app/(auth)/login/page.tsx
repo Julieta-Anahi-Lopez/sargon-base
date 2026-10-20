@@ -3,7 +3,7 @@
 import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Eye, EyeOff, LogIn, Leaf } from "lucide-react";
+import { Eye, EyeOff, LogIn, Store } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/redux/store";
 import { loginUser } from "@/redux/slices/authSlice";
@@ -35,9 +35,8 @@ function LoginForm() {
 
       {/* Logo mobile */}
       <div className="lg:hidden flex items-center gap-2 justify-center mb-8">
-        <Leaf size={20} className="text-brand" />
-        <span className="text-brand font-black text-xl tracking-wide uppercase">Ser </span>
-        <span className="text-brand/70 font-black text-xl tracking-wide uppercase">Natural</span>
+        <Store size={20} className="text-brand" />
+        <span className="text-brand font-black text-xl tracking-wide uppercase">{CLIENTE.nombre}</span>
       </div>
 
       <h1 className="text-2xl font-bold text-brand mb-1">Bienvenido</h1>
@@ -108,9 +107,18 @@ function LoginForm() {
         >
           ¿Olvidaste tu contraseña?
         </Link>
-        <p className="text-xs text-brand-dark/50 text-center">
-          ¿No tenés cuenta? Contactá a tu vendedor para que te registre.
-        </p>
+        {CLIENTE.features.registroLibre ? (
+          <p className="text-xs text-brand-dark/50 text-center">
+            ¿No tenés cuenta?{" "}
+            <Link href="/registro" className="text-brand-dark hover:text-brand font-medium transition-colors">
+              Registrate acá
+            </Link>
+          </p>
+        ) : (
+          <p className="text-xs text-brand-dark/50 text-center">
+            ¿No tenés cuenta? Contactá a tu vendedor para que te registre.
+          </p>
+        )}
       </div>
     </div>
   );
@@ -123,17 +131,13 @@ export default function LoginPage() {
       {/* Panel izquierdo — decorativo */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 bg-brand flex-col justify-between p-12">
         <div className="flex items-center gap-2">
-          <Leaf size={22} className="text-accent" />
-          <span className="text-accent font-black text-lg tracking-wide uppercase">Ser </span>
-          <span className="text-white font-black text-lg tracking-wide uppercase">Natural</span>
+          <Store size={22} className="text-accent" />
+          <span className="text-white font-black text-lg tracking-wide uppercase">{CLIENTE.nombre}</span>
         </div>
         <div>
           <blockquote className="text-white text-3xl xl:text-4xl font-bold leading-snug max-w-sm">
-            Todo lo que tu negocio necesita, en un solo lugar.
+            {CLIENTE.eslogan}
           </blockquote>
-          <p className="text-white/60 mt-4 text-sm max-w-xs leading-relaxed">
-            Catálogo completo, precios mayoristas y atención personalizada para ayudarte a crecer.
-          </p>
         </div>
         <p className="text-white/30 text-xs">© {new Date().getFullYear()} {CLIENTE.nombre}</p>
       </div>

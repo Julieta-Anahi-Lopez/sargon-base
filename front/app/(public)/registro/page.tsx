@@ -1,14 +1,15 @@
-"use client";
-
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+import { CLIENTE } from "@/lib/config";
+import { RegisterForm } from "@/components/auth/RegisterForm";
 
 export default function RegistroPage() {
-  const router = useRouter();
+  if (!CLIENTE.features.registroLibre) {
+    redirect("/login");
+  }
 
-  useEffect(() => {
-    router.replace("/login");
-  }, [router]);
-
-  return null;
+  return (
+    <div className="min-h-screen flex items-center justify-center px-6 py-12 bg-brand-light">
+      <RegisterForm />
+    </div>
+  );
 }
