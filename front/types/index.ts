@@ -202,24 +202,6 @@ export interface CarouselProps {
   interval?: number;
 }
 
-export interface ImageSectionProps {
-  imageSrc: string;
-  imageAlt: string;
-  title: string;
-  description: string;
-  imagePosition?: 'left' | 'right';
-}
-
-export interface WaveSectionProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-export interface WaveDividerProps {
-  color?: string;
-  flip?: boolean;
-}
-
 export interface FeatureProps {
   icon: React.ReactNode;
   title: string;
