@@ -60,7 +60,7 @@ export default function PoliticaPrivacidad() {
 
         </div>
 
-        <p className="mt-8 text-center text-brand-dark/60 text-xs">Última actualización: Enero 2025</p>
+        <p className="mt-8 text-center text-gray-400 text-xs">Última actualización: Enero 2025</p>
       </div>
     </main>
   );
@@ -77,7 +77,7 @@ function Section({ icon, title, children, alt = false }: {
       <div className="w-10 h-10 rounded-lg bg-brand-light flex items-center justify-center shrink-0">{icon}</div>
       <div className="space-y-3">
         <h2 className="text-lg font-semibold text-brand">{title}</h2>
-        <div className="text-brand-dark/80 text-sm leading-relaxed space-y-2">{children}</div>
+        <div className="text-gray-600 text-sm leading-relaxed space-y-2">{children}</div>
       </div>
     </div>
   );

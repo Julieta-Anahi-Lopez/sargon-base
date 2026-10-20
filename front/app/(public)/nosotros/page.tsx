@@ -39,7 +39,7 @@ export default function NosotrosPage() {
           <h1 className="text-5xl sm:text-6xl font-black text-brand mb-4">
             Nosotros
           </h1>
-          <p className="text-xl font-semibold text-brand-dark/80">
+          <p className="text-xl font-semibold text-gray-500">
             ¿Quiénes somos?
           </p>
         </div>
@@ -54,7 +54,7 @@ export default function NosotrosPage() {
               <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">
                 Lorem ipsum
               </span>
-              <p className="text-brand-darker/70 text-sm leading-relaxed">
+              <p className="text-gray-600 text-sm leading-relaxed">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -64,7 +64,7 @@ export default function NosotrosPage() {
               <span className="block text-accent text-xs font-bold uppercase tracking-widest mb-3">
                 Lorem ipsum
               </span>
-              <p className="text-brand-darker/70 text-sm leading-relaxed">
+              <p className="text-gray-600 text-sm leading-relaxed">
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
                 doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore
                 veritatis et quasi architecto beatae vitae dicta sunt explicabo.
@@ -98,7 +98,7 @@ export default function NosotrosPage() {
                 ) : null}
               </div>
               <h3 className="font-bold text-brand text-base leading-snug">{titulo}</h3>
-              <p className="text-brand-darker/70 text-sm leading-relaxed">{desc}</p>
+              <p className="text-gray-600 text-sm leading-relaxed">{desc}</p>
               <Link href="/catalogo" className="text-brand text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all">
                 Ver más <ArrowRight size={14} />
               </Link>

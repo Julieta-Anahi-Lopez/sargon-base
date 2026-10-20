@@ -26,7 +26,7 @@ export default function HomePage() {
               <span className="text-accent">dolor sit</span><br />
               amet.
             </h1>
-            <p className="text-brand-darker/70 text-lg max-w-sm leading-relaxed mb-10">
+            <p className="text-gray-600 text-lg max-w-sm leading-relaxed mb-10">
               {CLIENTE.descripcion}
             </p>
             <div className="flex flex-wrap gap-3">
@@ -65,7 +65,7 @@ export default function HomePage() {
                   <Icon size={22} className="text-brand" />
                 </div>
                 <p className="font-bold text-brand text-sm">{label}</p>
-                <p className="text-brand-darker/70 text-sm leading-relaxed">{desc}</p>
+                <p className="text-gray-600 text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -102,7 +102,7 @@ export default function HomePage() {
         <h2 className="text-2xl font-bold text-brand mb-3">
           ¡No te quedés con dudas!
         </h2>
-        <p className="text-brand-darker/70 text-sm max-w-md mx-auto mb-8">
+        <p className="text-gray-600 text-sm max-w-md mx-auto mb-8">
           Solicitá toda la información que necesitás. Estamos para ayudarte a que tu negocio sea el mejor del barrio.
         </p>
         <a
