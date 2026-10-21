@@ -266,7 +266,16 @@ body {
   .hdr { padding: .9rem 1.25rem; }
   .hdr-title { font-size: 1.5rem; }
   .scope { padding: .9rem 1.25rem; }
-  .scope-desc { margin-bottom: .5rem; }
+  .scope-desc { margin-bottom: .3rem; }
+  .scope-items { display: block; }
+  .scope-items > span { display: inline; border: none; background: none; padding: 0; border-radius: 0; font-size: .78rem; color: #444; }
+  .scope-items > span::after { content: ' · '; color: #bbb; }
+  .scope-items > span:last-child::after { content: ''; }
+  .plan { page-break-inside: avoid; }
+  .titem { page-break-inside: avoid; }
+  .terms { page-break-inside: avoid; }
+  .extras { page-break-inside: avoid; }
+  .reqs { page-break-before: always; }
   .terms { padding: .9rem 1.25rem; }
 
   /* Plans — 3 cols, compact */
@@ -335,7 +344,7 @@ body {
       </div>
       <div class="hdr-meta-item">
         <span class="meta-lbl">Validez</span>
-        <span class="meta-val">30 días</span>
+        <span class="meta-val">15 días</span>
       </div>
     </div>
   </div>
@@ -344,14 +353,23 @@ body {
   <div class="scope">
     <h2>Alcance del proyecto</h2>
     <div class="scope-items">
-      <span><span contenteditable="true">Catálogo B2B con precios por cliente</span></span>
+      <span><span contenteditable="true">Home</span></span>
+      <span><span contenteditable="true">Sección Nosotros</span></span>
+      <span><span contenteditable="true">Catálogo B2B y B2C con listas de precios diferenciadas por cliente</span></span>
+      <span><span contenteditable="true">Sección de productos destacados</span></span>
+      <span><span contenteditable="true">Sección de productos en oferta o combo</span></span>
+      <span><span contenteditable="true">Carrusel de imágenes por producto</span></span>
+      <span><span contenteditable="true">Personalización de stock visible en la web</span></span>
       <span><span contenteditable="true">Carrito y control de stock en tiempo real</span></span>
+      <span><span contenteditable="true">Carrito persistente entre dispositivos</span></span>
+      <span><span contenteditable="true">Doble validación al momento de confirmar pedido</span></span>
+      <span><span contenteditable="true">Pasarela de pago</span></span>
       <span><span contenteditable="true">Registro y login de clientes</span></span>
       <span><span contenteditable="true">Gestión de pedidos</span></span>
-      <span><span contenteditable="true">Módulo de vendedores</span></span>
+      <span><span contenteditable="true">Módulo de vendedores para gestión de usuarios</span></span>
       <span><span contenteditable="true">Filtros y búsqueda del catálogo</span></span>
-      <span><span contenteditable="true">API REST</span></span>
-      <span><span contenteditable="true">Frontend web responsive (Next.js)</span></span>
+      <span><span contenteditable="true">API REST con capa de seguridad</span></span>
+      <span><span contenteditable="true">Diseño responsivo para todo tipo de pantallas</span></span>
     </div>
   </div>
 
@@ -369,7 +387,7 @@ body {
         <div class="plan-div"></div>
         <div>
           <div class="plan-plbl">Pago único</div>
-          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">1.200</span></div>
+          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">1.300</span></div>
           <div class="plan-mo">+ <span class="v">USD <span contenteditable="true" class="ev">50</span>/mes</span> mantenimiento</div>
           <div class="plan-mo">+ <span class="v">USD <span contenteditable="true" class="ev">25</span>/mes</span> servidor y hosting</div>
         </div>
@@ -396,7 +414,7 @@ body {
         <div class="plan-div"></div>
         <div>
           <div class="plan-plbl">Pago único (incluye 6 meses mantenimiento)</div>
-          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">1.500</span></div>
+          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">1.600</span></div>
           <div class="plan-mo"><span class="v">Meses 1–6: mantenimiento incluido</span></div>
           <div class="plan-mo">+ <span class="v">USD <span contenteditable="true" class="ev">25</span>/mes</span> servidor y hosting</div>
           <div class="plan-mo-note">desde el mes 7: +USD <span contenteditable="true" class="ev">50</span>/mes mantenimiento</div>
@@ -431,8 +449,8 @@ body {
         <div class="plan-div"></div>
         <div>
           <div class="plan-plbl">Pago inicial reducido</div>
-          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">800</span></div>
-          <div class="plan-mo">Año 1: <span class="v">USD <span contenteditable="true" class="ev">100</span>/mes</span> mantenimiento</div>
+          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">900</span></div>
+          <div class="plan-mo">Año 1: <span class="v">USD <span contenteditable="true" class="ev">125</span>/mes</span> mantenimiento</div>
           <div class="plan-mo">+ <span class="v">USD <span contenteditable="true" class="ev">25</span>/mes</span> servidor y hosting</div>
           <div class="plan-mo-note">desde el año 2: USD <span contenteditable="true" class="ev">50</span>/mes mant. + USD <span contenteditable="true" class="ev">25</span>/mes hosting</div>
         </div>
@@ -472,9 +490,9 @@ body {
         <tbody>
           <tr>
             <td>Pago inicial<small class="row-concept">Desarrollo del sitio</small></td>
-            <td>USD <span class="ev en" contenteditable="true">1.200</span></td>
-            <td class="rc">USD <span class="ev en" contenteditable="true">1.500</span></td>
-            <td>USD <span class="ev en" contenteditable="true">800</span></td>
+            <td>USD <span class="ev en" contenteditable="true">1.300</span></td>
+            <td class="rc">USD <span class="ev en" contenteditable="true">1.600</span></td>
+            <td>USD <span class="ev en" contenteditable="true">900</span></td>
           </tr>
           <tr>
             <td>Servidor y hosting mensual<small class="row-concept">Servidor y hosting</small></td>
@@ -486,7 +504,7 @@ body {
             <td>Mantenimiento año 1<small class="row-concept">Mantenimiento mensual</small></td>
             <td class="en">USD <span class="ev" contenteditable="true">50</span>/mes</td>
             <td class="rc"><span class="ck">✓ Incluido meses 1–6</span><br><small style="opacity:.8">USD <span class="ev" contenteditable="true">50</span>/mes desde mes 7</small></td>
-            <td class="en">USD <span class="ev" contenteditable="true">100</span>/mes</td>
+            <td class="en">USD <span class="ev" contenteditable="true">125</span>/mes</td>
           </tr>
           <tr>
             <td>Mantenimiento año 2+<small class="row-concept">Mantenimiento mensual</small></td>
@@ -502,9 +520,9 @@ body {
           </tr>
           <tr>
             <td>Total estimado año 1</td>
-            <td>USD <span class="ev en" contenteditable="true">2.100</span></td>
-            <td class="rc">USD <span class="ev en" contenteditable="true">2.100</span></td>
-            <td>USD <span class="ev en" contenteditable="true">2.300</span></td>
+            <td>USD <span class="ev en" contenteditable="true">2.200</span></td>
+            <td class="rc">USD <span class="ev en" contenteditable="true">2.200</span></td>
+            <td>USD <span class="ev en" contenteditable="true">2.700</span></td>
           </tr>
           <tr>
             <td>Total estimado año 2 <span style="font-size:.75em;opacity:.6;font-weight:400">(costo estable)</span></td>
@@ -532,7 +550,7 @@ body {
           <div class="gcard-name">Desarrollo del sitio</div>
         </div>
         <div class="gcard-body">
-          El trabajo de diseño y programación del sistema completo: interfaz, lógica de negocio, base de datos y todas las funcionalidades acordadas. Se paga una única vez. El cliente obtiene <strong>uso exclusivo y permanente</strong> del sistema para su operación; el código fuente y la arquitectura subyacente son <strong>propiedad intelectual de Sargon</strong>.
+          El trabajo de diseño y programación del sistema completo: interfaz, lógica de negocio, base de datos y todas las funcionalidades acordadas. Se paga una única vez. El cliente obtiene <strong>uso exclusivo y permanente</strong> del sistema para su operación; el código fuente y la arquitectura subyacente son <strong>propiedad intelectual de los desarrolladores</strong>.
         </div>
       </div>
 
@@ -571,7 +589,7 @@ body {
   <!-- Requerimientos del cliente -->
   <div class="reqs">
     <h2>Material requerido al cliente</h2>
-    <p class="reqs-intro">Para iniciar el proyecto necesitamos que el cliente entregue lo siguiente antes del comienzo del desarrollo.</p>
+    <p class="reqs-intro">Para iniciar el proyecto necesitamos que el cliente entregue lo siguiente antes del comienzo del desarrollo. Todo el material deberá enviarse <strong>junto y en un solo envío</strong> al correo <strong>lopez.julietaanahi@gmail.com</strong> — no se aceptan entregas por WhatsApp ni por otros medios, para garantizar claridad y seguimiento de los archivos.</p>
     <div class="reqs-grid">
 
       <div class="req-group">
@@ -589,28 +607,24 @@ body {
       <div class="req-group">
         <div class="req-group-title">Imágenes</div>
         <div class="req-item">
-          foto-portada.jpg
-          <span class="req-spec">Banner principal. JPG/PNG, mín. 1920×1080 px.</span>
-        </div>
-        <div class="req-item">
-          foto-empresa.jpg
-          <span class="req-spec">Local o equipo. JPG/PNG, mín. 1200×800 px.</span>
-        </div>
-        <div class="req-item">
-          foto-producto-1.jpg, foto-producto-2.jpg…
-          <span class="req-spec">Una por producto. JPG, fondo blanco, mín. 800×800 px.</span>
+          Fotos para el diseño del sitio
+          <span class="req-spec">Imágenes para home, nosotros, secciones destacadas y cualquier página de contenido. Idealmente 6 o 7 fotos para tener disponibilidad de elección. JPG/PNG, buena resolución (mín. 1200 px de ancho).</span>
         </div>
       </div>
 
       <div class="req-group">
         <div class="req-group-title">Textos y datos</div>
         <div class="req-item">
-          Descripción de la empresa
-          <span class="req-spec">Para la sección "Quiénes somos".</span>
+          Nombre fiscal de la empresa
+          <span class="req-spec">Razón social o nombre legal, para la política de privacidad y términos del sitio.</span>
         </div>
         <div class="req-item">
-          Lista de productos inicial
-          <span class="req-spec">Excel o CSV: nombre, descripción, precio, stock, categoría.</span>
+          Descripción de la empresa
+          <span class="req-spec">Para la página "Nosotros".</span>
+        </div>
+        <div class="req-item">
+          Slogan o frase distintiva
+          <span class="req-spec">Si la empresa tiene una frase que la identifique, para usar en el diseño del sitio.</span>
         </div>
         <div class="req-item">
           Datos de contacto
@@ -654,7 +668,7 @@ body {
     <div class="terms-grid">
       <div class="titem">
         <span class="tkey">Moneda</span>
-        <span class="tval">Valores en dólares (USD). El pago se realiza en pesos argentinos al tipo de cambio vendedor del <strong>Banco Nación Argentina</strong> del día del pago.</span>
+        <span class="tval">Valores en dólares (USD), <strong>no incluyen IVA</strong>. El pago se realiza en pesos argentinos al tipo de cambio <strong>valor de venta del Banco Nación Argentina</strong> del día del pago.</span>
       </div>
       <div class="titem">
         <span class="tkey">Forma de pago — desarrollo</span>
@@ -669,8 +683,12 @@ body {
         <span class="tval ev" contenteditable="true">A confirmar según alcance final. Estimado: 6–8 semanas hábiles desde el inicio del proyecto.</span>
       </div>
       <div class="titem">
+        <span class="tkey">Participación del cliente</span>
+        <span class="tval">La participación activa del cliente es necesaria en la etapa avanzada del proyecto: revisión de avances, aprobación de diseño y entrega de material en tiempo y forma. La demora en estas instancias puede afectar el cumplimiento de los plazos acordados.</span>
+      </div>
+      <div class="titem">
         <span class="tkey">Validez del presupuesto</span>
-        <span class="tval">30 días corridos desde la fecha de emisión.</span>
+        <span class="tval">15 días corridos desde la fecha de emisión.</span>
       </div>
     </div>
   </div>
