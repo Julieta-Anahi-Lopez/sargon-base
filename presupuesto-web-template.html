@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta Comercial — Sargon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* ── Tokens ────────────────────────────────────────── */
+:root {
+  --bg:      #f3f3ef;
+  --surface: #ffffff;
+  --ink:     #111118;
+  --ink2:    #525268;
+  --ink3:    #9898b0;
+  --border:  #dcdce8;
+  --accent:  #1740b0;
+  --alight:  #eef2fc;
+  --recbg:   #1740b0;
+  --recfg:   #ffffff;
+  --yes:     #0e6b3a;
+  --rad:     12px;
+  --disp:    'Fraunces', Georgia, serif;
+  --body:    'Figtree', system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:      #0d0d14;
+    --surface: #15151e;
+    --ink:     #f0f0f8;
+    --ink2:    #9898c0;
+    --ink3:    #5050a0;
+    --border:  #2a2a3a;
+    --accent:  #5578e8;
+    --alight:  #161e40;
+    --recbg:   #2348c0;
+    --recfg:   #ffffff;
+    --yes:     #34d399;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 2rem max(16px, 2vw);
+}
+
+/* ── Editable ─────────────────────────────────────── */
+[contenteditable] { outline: none; border-radius: 3px; cursor: text; }
+[contenteditable]:hover  { background: var(--alight); }
+[contenteditable]:focus  { background: var(--alight); box-shadow: 0 0 0 2px var(--accent); }
+.ev { border-bottom: 1.5px dashed color-mix(in srgb, var(--accent) 35%, transparent); }
+
+/* ── Layout ───────────────────────────────────────── */
+.wrap { max-width: 940px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+
+/* ── Edit bar ─────────────────────────────────────── */
+.edit-bar {
+  display: flex; align-items: center; gap: .5rem;
+  background: var(--alight); border: 1px solid var(--border);
+  border-radius: 8px; padding: .45rem 1rem;
+  font-size: .78rem; color: var(--ink3);
+}
+
+/* ── Header ───────────────────────────────────────── */
+.hdr {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--rad); padding: 2rem 2.5rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: start;
+}
+.hdr-brand {
+  font-family: var(--disp); font-size: .8rem; font-weight: 900;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: .65rem;
+}
+.hdr-title {
+  font-family: var(--disp); font-size: 2.4rem; font-weight: 900;
+  color: var(--ink); line-height: 1.1; text-wrap: balance;
+}
+.hdr-for { font-size: .9rem; color: var(--ink2); margin-top: .5rem; }
+.hdr-meta { text-align: right; display: flex; flex-direction: column; gap: .7rem; }
+.hdr-meta-item { display: flex; flex-direction: column; gap: .1rem; }
+.meta-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); }
+.meta-val { font-size: .875rem; font-weight: 600; color: var(--ink); }
+
+/* ── Scope ────────────────────────────────────────── */
+.scope {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--rad); padding: 1.75rem 2.5rem;
+}
+.scope h2 { font-family: var(--disp); font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: .6rem; }
+.scope-desc { font-size: .875rem; color: var(--ink2); margin-bottom: .875rem; }
+.scope-items { display: flex; flex-wrap: wrap; gap: .35rem; }
+.scope-items > span {
+  display: inline-block;
+  font-size: .78rem; color: var(--ink2);
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 99px; padding: .25rem .85rem;
+}
+
+/* ── Plans grid ───────────────────────────────────── */
+.section-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink3); margin-bottom: .75rem; }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; align-items: start; }
+
+.plan {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--rad); padding: 1.5rem;
+  display: flex; flex-direction: column; gap: .7rem; position: relative;
+}
+.plan.rec {
+  background: var(--recbg); border-color: var(--recbg); color: var(--recfg);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px -8px rgba(23, 64, 176, .35);
+}
+.plan-badge {
+  position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+  background: var(--surface); color: var(--accent);
+  font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  padding: .2rem .75rem; border-radius: 99px; border: 1.5px solid var(--border);
+  white-space: nowrap;
+}
+.plan-name { font-family: var(--disp); font-size: 1.05rem; font-weight: 900; line-height: 1.2; }
+.plan-sub  { font-size: .77rem; opacity: .65; font-style: italic; margin-top: .15rem; }
+.plan-div  { height: 1px; background: var(--border); opacity: .6; }
+.plan.rec .plan-div { background: rgba(255,255,255,.22); }
+
+.plan-plbl { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .6; margin-bottom: .2rem; }
+.plan-usd  { font-family: var(--disp); font-size: 2rem; font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1; }
+.plan-usd .u { font-size: .85rem; font-weight: 500; opacity: .65; }
+.plan-mo   { font-size: .81rem; margin-top: .3rem; }
+.plan-mo .v { font-weight: 700; }
+.plan-mo-note { font-size: .71rem; opacity: .6; margin-top: .15rem; line-height: 1.5; }
+
+.plan-feats { list-style: none; display: flex; flex-direction: column; gap: .4rem; font-size: .81rem; }
+.plan-feats li { display: flex; align-items: flex-start; gap: .45rem; }
+.fi { flex-shrink: 0; width: 15px; height: 15px; margin-top: 1px; }
+.fi-y { color: var(--yes); }
+.fi-n { opacity: .3; }
+.plan.rec .fi-y { color: #86efac; }
+.plan.rec .fi-n { opacity: .25; }
+
+/* ── Comparison ───────────────────────────────────── */
+.cmp { background: var(--surface); border: 1px solid var(--border); border-radius: var(--rad); overflow: hidden; }
+.cmp-head { padding: 1.25rem 2rem .5rem; }
+.cmp-head h2 { font-family: var(--disp); font-size: 1rem; font-weight: 700; color: var(--ink); }
+.cmp-scroll { overflow-x: auto; }
+.ctable { width: 100%; border-collapse: collapse; font-size: .855rem; }
+.ctable th {
+  padding: .55rem 1rem; font-size: 9px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink3);
+  border-bottom: 1px solid var(--border);
+}
+.ctable th:first-child { text-align: left; padding-left: 2rem; min-width: 185px; }
+.ctable th:not(:first-child) { text-align: center; min-width: 120px; }
+.ctable th.rc { background: var(--alight); color: var(--accent); }
+.ctable td {
+  padding: .65rem 1rem; border-bottom: 1px solid var(--border);
+  text-align: center; color: var(--ink2); vertical-align: middle;
+}
+.ctable td:first-child { text-align: left; padding-left: 2rem; color: var(--ink); font-weight: 500; }
+.ctable td.rc { background: color-mix(in srgb, var(--alight) 55%, transparent); }
+.ctable tbody tr:last-child td { border-bottom: none; font-weight: 700; color: var(--ink); }
+.ctable tbody tr:hover td { background: color-mix(in srgb, var(--bg) 40%, transparent); }
+.ctable tbody tr:hover td.rc { background: color-mix(in srgb, var(--alight) 70%, transparent); }
+.ck { color: var(--yes); font-weight: 700; }
+.cx { opacity: .35; }
+.en { font-variant-numeric: tabular-nums; }
+.row-concept { display: block; font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink3); margin-top: .1rem; opacity: .8; }
+
+/* ── Glossary ─────────────────────────────────────── */
+.glos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.gcard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--rad); padding: 1.5rem; }
+.gcard-hd { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
+.gcard-ico {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--alight); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.gcard-ico svg { width: 15px; height: 15px; color: var(--accent); display: block; }
+.gcard-name { font-family: var(--disp); font-size: .9rem; font-weight: 700; color: var(--ink); }
+.gcard-body { font-size: .795rem; color: var(--ink2); line-height: 1.6; }
+
+/* ── Terms ────────────────────────────────────────── */
+.terms { background: var(--surface); border: 1px solid var(--border); border-radius: var(--rad); padding: 1.75rem 2.5rem; }
+.terms h2 { font-family: var(--disp); font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 1rem; }
+.terms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.25rem; }
+.titem { display: flex; flex-direction: column; gap: .25rem; }
+.tkey { font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink3); }
+.tval { font-size: .835rem; color: var(--ink2); line-height: 1.55; }
+
+/* ── Footer ───────────────────────────────────────── */
+.footer { text-align: center; font-size: .77rem; color: var(--ink3); padding-bottom: .5rem; }
+
+/* ── Extras ───────────────────────────────────────── */
+.extras {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--rad); padding: 1.25rem 2.5rem;
+  display: flex; align-items: flex-start; gap: 1.5rem;
+}
+.extras-icon {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 8px;
+  background: var(--alight); display: flex; align-items: center; justify-content: center;
+  margin-top: .1rem;
+}
+.extras-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; }
+.extras-body h2 { font-family: var(--disp); font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: .3rem; }
+.extras-body p { font-size: .82rem; color: var(--ink2); line-height: 1.55; }
+
+/* ── Requerimientos ───────────────────────────────── */
+.reqs {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--rad); padding: 1.75rem 2.5rem;
+}
+.reqs h2 { font-family: var(--disp); font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: .35rem; }
+.reqs-intro { font-size: .82rem; color: var(--ink3); margin-bottom: 1.25rem; }
+.reqs-grid { display: flex; flex-direction: column; gap: 1.1rem; }
+.req-group { display: flex; flex-direction: column; gap: .4rem; border-top: 1px solid var(--border); padding-top: .9rem; }
+.req-group-title {
+  font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: .1rem;
+}
+.req-item { display: flex; align-items: flex-start; gap: .5rem; font-size: .8rem; color: var(--ink2); line-height: 1.45; }
+.req-item::before {
+  content: ''; flex-shrink: 0; width: 14px; height: 14px; margin-top: 1px;
+  border: 1.5px solid var(--border); border-radius: 4px; background: var(--bg);
+}
+.req-spec { font-size: .72rem; color: var(--ink3); display: block; margin-top: .1rem; }
+
+/* ── Print button ─────────────────────────────────── */
+.print-btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 8px; padding: .45rem 1rem;
+  font-family: var(--body); font-size: .78rem; font-weight: 600;
+  cursor: pointer; transition: opacity .15s; margin-left: auto;
+}
+.print-btn:hover { opacity: .85; }
+
+/* ── Print / PDF ──────────────────────────────────── */
+@media print {
+  @page { size: A4 portrait; margin: 1.4cm 1.5cm; }
+
+  body {
+    background: #fff; color: #111;
+    padding: 0; font-size: 11px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .wrap { gap: .75rem; max-width: 100%; }
+  .edit-bar, .print-btn { display: none !important; }
+  [contenteditable] { border-bottom: none !important; }
+
+  /* Surfaces */
+  .hdr, .scope, .cmp, .gcard, .terms {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  .hdr { padding: .9rem 1.25rem; }
+  .hdr-title { font-size: 1.5rem; }
+  .scope { padding: .9rem 1.25rem; }
+  .scope-desc { margin-bottom: .5rem; }
+  .terms { padding: .9rem 1.25rem; }
+
+  /* Plans — 3 cols, compact */
+  .plans { gap: .5rem; }
+  .plan { padding: .85rem .9rem; gap: .4rem; border: 1px solid #ccc !important; box-shadow: none !important; }
+  .plan.rec { background: #1740b0 !important; color: #fff !important; transform: none; }
+  .plan-badge { border: 1px solid #aaa !important; background: #fff !important; }
+  .plan-usd { font-size: 1.35rem; }
+
+  /* Page break: plans on p1, table+glossary+terms on p2 */
+  .cmp { page-break-before: always; }
+
+  /* Comparison table */
+  .cmp-head { padding: .65rem 1rem .3rem; }
+  .ctable th, .ctable td { padding: .38rem .7rem; }
+  .ctable th:first-child, .ctable td:first-child { padding-left: 1rem; }
+  .ctable td.rc, .ctable th.rc { background: #eef2fc !important; }
+
+  /* Glossary */
+  .glos { gap: .5rem; }
+  .gcard { padding: .85rem 1rem; }
+
+  /* Footer */
+  .footer { font-size: .7rem; margin-top: .25rem; }
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 680px) {
+  .hdr { grid-template-columns: 1fr; padding: 1.5rem; }
+  .hdr-meta { text-align: left; }
+  .plans, .glos { grid-template-columns: 1fr; }
+  .plan.rec { transform: none; }
+  .scope, .terms { padding: 1.25rem 1.5rem; }
+  .hdr-title { font-size: 1.8rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Edit notice + print -->
+  <div class="edit-bar">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="flex-shrink:0"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+    Hacé clic en cualquier valor para editarlo. Los cambios se mantienen mientras la pestaña esté abierta.
+    <button class="print-btn" onclick="window.print()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Guardar PDF
+    </button>
+  </div>
+
+  <!-- Header -->
+  <div class="hdr">
+    <div>
+      <div class="hdr-brand">Sargon</div>
+      <div class="hdr-title">Propuesta<br>Comercial</div>
+      <div class="hdr-for" style="margin-top:.6rem">Para: <strong contenteditable="true" class="ev">Nombre del cliente</strong></div>
+    </div>
+    <div class="hdr-meta">
+      <div class="hdr-meta-item">
+        <span class="meta-lbl">Proyecto</span>
+        <span class="meta-val ev" contenteditable="true">Nombre del proyecto</span>
+      </div>
+      <div class="hdr-meta-item">
+        <span class="meta-lbl">Fecha</span>
+        <span class="meta-val ev" contenteditable="true">Octubre 2026</span>
+      </div>
+      <div class="hdr-meta-item">
+        <span class="meta-lbl">Validez</span>
+        <span class="meta-val">30 días</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scope -->
+  <div class="scope">
+    <h2>Alcance del proyecto</h2>
+    <div class="scope-items">
+      <span><span contenteditable="true">Catálogo B2B con precios por cliente</span></span>
+      <span><span contenteditable="true">Carrito y control de stock en tiempo real</span></span>
+      <span><span contenteditable="true">Registro y login de clientes</span></span>
+      <span><span contenteditable="true">Gestión de pedidos</span></span>
+      <span><span contenteditable="true">Módulo de vendedores</span></span>
+      <span><span contenteditable="true">Filtros y búsqueda del catálogo</span></span>
+      <span><span contenteditable="true">API REST</span></span>
+      <span><span contenteditable="true">Frontend web responsive (Next.js)</span></span>
+    </div>
+  </div>
+
+  <!-- Plan cards -->
+  <div>
+    <div class="section-lbl">Opciones de contratación</div>
+    <div class="plans">
+
+      <!-- Plan A: Base -->
+      <div class="plan">
+        <div>
+          <div class="plan-name">Plan Base</div>
+          <div class="plan-sub">Llave en mano</div>
+        </div>
+        <div class="plan-div"></div>
+        <div>
+          <div class="plan-plbl">Pago único</div>
+          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">1.200</span></div>
+          <div class="plan-mo">+ <span class="v">USD <span contenteditable="true" class="ev">50</span>/mes</span> mantenimiento</div>
+          <div class="plan-mo">+ <span class="v">USD <span contenteditable="true" class="ev">25</span>/mes</span> servidor y hosting</div>
+        </div>
+        <div class="plan-div"></div>
+        <ul class="plan-feats">
+          <li>
+            <svg class="fi fi-y" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 9 6 13 14 4"/></svg>
+            Entrega del sistema completo
+          </li>
+          <li>
+            <svg class="fi fi-y" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 9 6 13 14 4"/></svg>
+            Servidor y hosting mensual
+          </li>
+        </ul>
+      </div>
+
+      <!-- Plan B: Profesional (recommended) -->
+      <div class="plan rec">
+        <div class="plan-badge">★ Recomendado</div>
+        <div>
+          <div class="plan-name">Plan Profesional</div>
+          <div class="plan-sub">Desarrollo + tranquilidad</div>
+        </div>
+        <div class="plan-div"></div>
+        <div>
+          <div class="plan-plbl">Pago único (incluye 6 meses mantenimiento)</div>
+          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">1.500</span></div>
+          <div class="plan-mo"><span class="v">Meses 1–6: mantenimiento incluido</span></div>
+          <div class="plan-mo">+ <span class="v">USD <span contenteditable="true" class="ev">25</span>/mes</span> servidor y hosting</div>
+          <div class="plan-mo-note">desde el mes 7: +USD <span contenteditable="true" class="ev">50</span>/mes mantenimiento</div>
+        </div>
+        <div class="plan-div"></div>
+        <ul class="plan-feats">
+          <li>
+            <svg class="fi fi-y" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 9 6 13 14 4"/></svg>
+            Entrega del sistema completo
+          </li>
+          <li>
+            <svg class="fi fi-y" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 9 6 13 14 4"/></svg>
+            Servidor y hosting mensual
+          </li>
+          <li>
+            <svg class="fi fi-y" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 9 6 13 14 4"/></svg>
+            6 meses de mantenimiento incluidos
+          </li>
+          <li>
+            <svg class="fi fi-y" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 9 6 13 14 4"/></svg>
+            Ajustes menores y actualizaciones
+          </li>
+        </ul>
+      </div>
+
+      <!-- Plan C: Inicio -->
+      <div class="plan">
+        <div>
+          <div class="plan-name">Plan Inicio</div>
+          <div class="plan-sub">Acceso económico</div>
+        </div>
+        <div class="plan-div"></div>
+        <div>
+          <div class="plan-plbl">Pago inicial reducido</div>
+          <div class="plan-usd"><span class="u">USD </span><span contenteditable="true" class="ev">800</span></div>
+          <div class="plan-mo">Año 1: <span class="v">USD <span contenteditable="true" class="ev">100</span>/mes</span> mantenimiento</div>
+          <div class="plan-mo">+ <span class="v">USD <span contenteditable="true" class="ev">25</span>/mes</span> servidor y hosting</div>
+          <div class="plan-mo-note">desde el año 2: USD <span contenteditable="true" class="ev">50</span>/mes mant. + USD <span contenteditable="true" class="ev">25</span>/mes hosting</div>
+        </div>
+        <div class="plan-div"></div>
+        <ul class="plan-feats">
+          <li>
+            <svg class="fi fi-y" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 9 6 13 14 4"/></svg>
+            Entrega del sistema completo
+          </li>
+          <li>
+            <svg class="fi fi-y" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 9 6 13 14 4"/></svg>
+            Servidor y hosting mensual
+          </li>
+          <li>
+            <svg class="fi fi-n" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/></svg>
+            Cuota mensual más alta el primer año
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Comparison table -->
+  <div class="cmp">
+    <div class="cmp-head"><h2>Comparación detallada</h2></div>
+    <div class="cmp-scroll">
+      <table class="ctable">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Plan Base</th>
+            <th class="rc">Plan Profesional ★</th>
+            <th>Plan Inicio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pago inicial<small class="row-concept">Desarrollo del sitio</small></td>
+            <td>USD <span class="ev en" contenteditable="true">1.200</span></td>
+            <td class="rc">USD <span class="ev en" contenteditable="true">1.500</span></td>
+            <td>USD <span class="ev en" contenteditable="true">800</span></td>
+          </tr>
+          <tr>
+            <td>Servidor y hosting mensual<small class="row-concept">Servidor y hosting</small></td>
+            <td class="en">USD <span class="ev" contenteditable="true">25</span>/mes</td>
+            <td class="rc en">USD <span class="ev" contenteditable="true">25</span>/mes</td>
+            <td class="en">USD <span class="ev" contenteditable="true">25</span>/mes</td>
+          </tr>
+          <tr>
+            <td>Mantenimiento año 1<small class="row-concept">Mantenimiento mensual</small></td>
+            <td class="en">USD <span class="ev" contenteditable="true">50</span>/mes</td>
+            <td class="rc"><span class="ck">✓ Incluido meses 1–6</span><br><small style="opacity:.8">USD <span class="ev" contenteditable="true">50</span>/mes desde mes 7</small></td>
+            <td class="en">USD <span class="ev" contenteditable="true">100</span>/mes</td>
+          </tr>
+          <tr>
+            <td>Mantenimiento año 2+<small class="row-concept">Mantenimiento mensual</small></td>
+            <td class="en">USD <span class="ev" contenteditable="true">50</span>/mes</td>
+            <td class="rc en">USD <span class="ev" contenteditable="true">50</span>/mes</td>
+            <td class="en">USD <span class="ev" contenteditable="true">50</span>/mes</td>
+          </tr>
+          <tr>
+            <td>Ediciones de diseño (año 1)<small class="row-concept">Mantenimiento mensual</small></td>
+            <td><span class="cx">Se presupuestan</span></td>
+            <td class="rc"><span class="ck">✓ 2 incluidas sin cargo</span></td>
+            <td><span class="cx">Se presupuestan</span></td>
+          </tr>
+          <tr>
+            <td>Total estimado año 1</td>
+            <td>USD <span class="ev en" contenteditable="true">2.100</span></td>
+            <td class="rc">USD <span class="ev en" contenteditable="true">2.100</span></td>
+            <td>USD <span class="ev en" contenteditable="true">2.300</span></td>
+          </tr>
+          <tr>
+            <td>Total estimado año 2 <span style="font-size:.75em;opacity:.6;font-weight:400">(costo estable)</span></td>
+            <td>USD <span class="ev en" contenteditable="true">900</span></td>
+            <td class="rc">USD <span class="ev en" contenteditable="true">900</span></td>
+            <td>USD <span class="ev en" contenteditable="true">900</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Glossary -->
+  <div>
+    <div class="section-lbl" style="margin-bottom:.75rem">¿Qué estoy pagando?</div>
+    <div class="glos">
+
+      <div class="gcard">
+        <div class="gcard-hd">
+          <div class="gcard-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <div class="gcard-name">Desarrollo del sitio</div>
+        </div>
+        <div class="gcard-body">
+          El trabajo de diseño y programación del sistema completo: interfaz, lógica de negocio, base de datos y todas las funcionalidades acordadas. Se paga una única vez. El cliente obtiene <strong>uso exclusivo y permanente</strong> del sistema para su operación; el código fuente y la arquitectura subyacente son <strong>propiedad intelectual de Sargon</strong>.
+        </div>
+      </div>
+
+      <div class="gcard">
+        <div class="gcard-hd">
+          <div class="gcard-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/>
+              <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+            </svg>
+          </div>
+          <div class="gcard-name">Servidor y hosting</div>
+        </div>
+        <div class="gcard-body">
+          El alquiler del espacio en internet donde vive el sistema. El servidor responde las consultas de tus clientes las 24 hs; el hosting es el servicio que lo mantiene conectado y disponible. Es un costo fijo mensual, como el alquiler de un local virtual.
+        </div>
+      </div>
+
+      <div class="gcard">
+        <div class="gcard-hd">
+          <div class="gcard-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+          </div>
+          <div class="gcard-name">Mantenimiento mensual</div>
+        </div>
+        <div class="gcard-body">
+          Horas de soporte técnico mensuales: actualización de librerías, corrección de errores que puedan surgir, ajustes menores de funcionamiento y monitoreo del sistema. Sin mantenimiento el sistema se pone en marcha hasta quedar funcional, pero queda expuesto a que actualizaciones externas fuera de nuestro control lo afecten con el tiempo.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Requerimientos del cliente -->
+  <div class="reqs">
+    <h2>Material requerido al cliente</h2>
+    <p class="reqs-intro">Para iniciar el proyecto necesitamos que el cliente entregue lo siguiente antes del comienzo del desarrollo.</p>
+    <div class="reqs-grid">
+
+      <div class="req-group">
+        <div class="req-group-title">Identidad y marca</div>
+        <div class="req-item">
+          Logo en formato vectorial
+          <span class="req-spec">SVG, AI o PDF — no JPG ni PNG.<br>Con fondo transparente.</span>
+        </div>
+        <div class="req-item">
+          Manual de marca
+          <span class="req-spec">Paleta de colores (hex/Pantone) y tipografías. Si no existe, se trabaja con modelo estándar.</span>
+        </div>
+      </div>
+
+      <div class="req-group">
+        <div class="req-group-title">Imágenes</div>
+        <div class="req-item">
+          foto-portada.jpg
+          <span class="req-spec">Banner principal. JPG/PNG, mín. 1920×1080 px.</span>
+        </div>
+        <div class="req-item">
+          foto-empresa.jpg
+          <span class="req-spec">Local o equipo. JPG/PNG, mín. 1200×800 px.</span>
+        </div>
+        <div class="req-item">
+          foto-producto-1.jpg, foto-producto-2.jpg…
+          <span class="req-spec">Una por producto. JPG, fondo blanco, mín. 800×800 px.</span>
+        </div>
+      </div>
+
+      <div class="req-group">
+        <div class="req-group-title">Textos y datos</div>
+        <div class="req-item">
+          Descripción de la empresa
+          <span class="req-spec">Para la sección "Quiénes somos".</span>
+        </div>
+        <div class="req-item">
+          Lista de productos inicial
+          <span class="req-spec">Excel o CSV: nombre, descripción, precio, stock, categoría.</span>
+        </div>
+        <div class="req-item">
+          Datos de contacto
+          <span class="req-spec">WhatsApp, email, dirección, redes sociales.</span>
+        </div>
+      </div>
+
+      <div class="req-group">
+        <div class="req-group-title">Dominio y accesos</div>
+        <div class="req-item">
+          Dominio ya registrado
+          <span class="req-spec">Ej: miempresa.com.ar. Si no lo tiene, Sargon puede gestionarlo.</span>
+        </div>
+        <div class="req-item">
+          Acceso al panel del registrador
+          <span class="req-spec">NIC Argentina, GoDaddy, Hostinger, etc. para delegar DNS.</span>
+        </div>
+        <div class="req-item">
+          Delegación de DNS a IP indicada
+          <span class="req-spec">Sargon provee la IP del servidor. El trámite lo realiza el cliente en el panel de su registrador.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Nuevas funcionalidades -->
+  <div class="extras">
+    <div class="extras-icon">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+    </div>
+    <div class="extras-body">
+      <h2>Nuevas funcionalidades a medida</h2>
+      <p>El sistema es extensible. Cualquier funcionalidad adicional que el cliente requiera —un nuevo módulo, una integración, un reporte— puede incorporarse de manera independiente. Se presupuesta por separado según el alcance y se desarrolla sin afectar la operación del sistema en producción.</p>
+    </div>
+  </div>
+
+  <!-- Terms -->
+  <div class="terms">
+    <h2>Condiciones de pago</h2>
+    <div class="terms-grid">
+      <div class="titem">
+        <span class="tkey">Moneda</span>
+        <span class="tval">Valores en dólares (USD). El pago se realiza en pesos argentinos al tipo de cambio vendedor del <strong>Banco Nación Argentina</strong> del día del pago.</span>
+      </div>
+      <div class="titem">
+        <span class="tkey">Forma de pago — desarrollo</span>
+        <span class="tval">50% al inicio del trabajo, 50% a la entrega del sistema.</span>
+      </div>
+      <div class="titem">
+        <span class="tkey">Pago mensual</span>
+        <span class="tval">Se abona por adelantado dentro de los primeros 5 días hábiles de cada mes.</span>
+      </div>
+      <div class="titem">
+        <span class="tkey">Plazo de entrega</span>
+        <span class="tval ev" contenteditable="true">A confirmar según alcance final. Estimado: 6–8 semanas hábiles desde el inicio del proyecto.</span>
+      </div>
+      <div class="titem">
+        <span class="tkey">Validez del presupuesto</span>
+        <span class="tval">30 días corridos desde la fecha de emisión.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    SARGON · Desarrollo de software &nbsp;·&nbsp;
+    <span contenteditable="true" class="ev">contacto@sargon.dev</span>
+  </div>
+
+</div>
+</body>
+</html>
