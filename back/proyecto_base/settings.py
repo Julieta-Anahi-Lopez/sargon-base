@@ -204,6 +204,10 @@ FRONTEND_URL = env('FRONTEND_URL', default='http://localhost:3000')
 NOMBRE_CLIENTE = env('NOMBRE_CLIENTE', default='Cliente')
 EMAIL_FROM = env('EMAIL_FROM', default='noreply@example.com')
 
+# ── Módulo de reportes del vendedor (opcional) ────────────────────────────────
+# Habilita /api/vendedor/* — endpoints de actividad web para usuarios vendedor.
+REPORTES_VENDEDOR_ENABLED = env.bool('REPORTES_VENDEDOR_ENABLED', default=False)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

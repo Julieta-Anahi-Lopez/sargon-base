@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { X, Home, BookOpen, Package, User, LogIn, LogOut, Info, UserPlus } from "lucide-react";
+import { X, Home, BookOpen, Package, User, LogIn, LogOut, Info, UserPlus, BarChart2 } from "lucide-react";
 import { useAuth } from "@/app/lib/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { CLIENTE } from "@/lib/config";
 
 interface Props {
   open:    boolean;
@@ -31,7 +32,12 @@ export function MobileNav({ open, onClose }: Props) {
           { href: "/pedidos",                  label: "Mis pedidos",   icon: <Package  size={18} /> },
           { href: "/cuenta",                   label: "Mi cuenta",     icon: <User     size={18} /> },
           ...(user?.catusu === "V"
-            ? [{ href: "/vendedor/nuevo-usuario", label: "Nuevo usuario", icon: <UserPlus size={18} /> }]
+            ? [
+                ...(CLIENTE.features.reportesVendedor
+                  ? [{ href: "/vendedor/reportes", label: "Reportes", icon: <BarChart2 size={18} /> }]
+                  : []),
+                { href: "/vendedor/nuevo-usuario", label: "Nuevo usuario", icon: <UserPlus size={18} /> },
+              ]
             : []),
         ]
       : []),

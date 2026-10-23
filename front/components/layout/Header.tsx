@@ -49,7 +49,12 @@ export function Header() {
                 <NavLink href="/pedidos">Mis pedidos</NavLink>
                 <NavLink href="/cuenta">Mi cuenta</NavLink>
                 {user?.catusu === "V" && (
-                  <NavLink href="/vendedor/nuevo-usuario">Nuevo usuario</NavLink>
+                  <>
+                    {CLIENTE.features.reportesVendedor && (
+                      <NavLink href="/vendedor/reportes">Reportes</NavLink>
+                    )}
+                    <NavLink href="/vendedor/nuevo-usuario">Nuevo usuario</NavLink>
+                  </>
                 )}
               </>
             )}

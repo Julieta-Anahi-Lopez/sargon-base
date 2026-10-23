@@ -56,3 +56,21 @@ urlpatterns = [
     path('api/carrito/', CarritoView.as_view(), name='carrito'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+if settings.MP_ENABLED:
+    urlpatterns += [path('api/pagos/', include('apps.pagos.urls'))]
+
+if getattr(settings, 'REPORTES_VENDEDOR_ENABLED', False):
+    from apps.users.views_vendedor import (
+        DashboardVendedorView, PedidosWebView, CarritosActivosView,
+        ClientesInactivosView, ProductosRankingView, ClienteDetalleView,
+        PedidoDetalleVendedorView,
+    )
+    urlpatterns += [
+        path('api/vendedor/dashboard/',          DashboardVendedorView.as_view(),       name='vendedor-dashboard'),
+        path('api/vendedor/pedidos-web/',        PedidosWebView.as_view(),              name='vendedor-pedidos'),
+        path('api/vendedor/carritos/',           CarritosActivosView.as_view(),         name='vendedor-carritos'),
+        path('api/vendedor/clientes-inactivos/', ClientesInactivosView.as_view(),       name='vendedor-inactivos'),
+        path('api/vendedor/productos-ranking/',  ProductosRankingView.as_view(),        name='vendedor-ranking'),
+        path('api/vendedor/cliente/<int:nro_con>/', ClienteDetalleView.as_view(),       name='vendedor-cliente'),
+        path('api/vendedor/pedido/<str:compro>/detalle/', PedidoDetalleVendedorView.as_view(), name='vendedor-pedido-detalle'),
+    ]
