@@ -46,6 +46,10 @@ export const CLIENTE = {
 
     // Habilita la ruta /vendedor/nuevo-usuario
     moduloVendedor: true,
+
+    // Habilita el botón "Pagar con Mercado Pago" en pedidos y las páginas de resultado.
+    // Requiere MP_ENABLED=True en el backend y las credenciales en el .env.
+    mercadoPago:    false,
   },
 
 } as const;
