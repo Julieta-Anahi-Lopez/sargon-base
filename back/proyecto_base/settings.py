@@ -204,6 +204,13 @@ FRONTEND_URL = env('FRONTEND_URL', default='http://localhost:3000')
 NOMBRE_CLIENTE = env('NOMBRE_CLIENTE', default='Cliente')
 EMAIL_FROM = env('EMAIL_FROM', default='noreply@example.com')
 
+# ── Mercado Pago (opcional) ───────────────────────────────────────────────────
+MP_ENABLED = env.bool('MP_ENABLED', default=False)
+if MP_ENABLED:
+    INSTALLED_APPS.append('apps.pagos')
+    MP_ACCESS_TOKEN = env('MP_ACCESS_TOKEN', default='')
+    BACKEND_URL = env('BACKEND_URL', default='http://localhost:8000')
+
 # ── Módulo de reportes del vendedor (opcional) ────────────────────────────────
 # Habilita /api/vendedor/* — endpoints de actividad web para usuarios vendedor.
 REPORTES_VENDEDOR_ENABLED = env.bool('REPORTES_VENDEDOR_ENABLED', default=False)
